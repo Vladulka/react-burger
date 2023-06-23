@@ -1,0 +1,19 @@
+.burger_list {
+    max-height: calc(100vh - 470px);
+    overflow: auto;
+}
+
+.burger_list_locked {
+    margin-left: 24px;
+}
+
+.total {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.total_price {
+    composes: total;
+    align-items: center;
+}
