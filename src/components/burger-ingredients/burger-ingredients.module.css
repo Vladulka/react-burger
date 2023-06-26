@@ -2,3 +2,7 @@
     max-height: calc(100vh - 300px);
     overflow: auto;
 }
+
+.tab_block {
+    display: flex;
+}

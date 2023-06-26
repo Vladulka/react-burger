@@ -13,7 +13,7 @@ export default function BurgerIngredients ({ingredients}) {
             <p className="text text_type_main-large mt-10 mb-5">
                 Собери свой бургер
             </p>
-            <div style={{display: 'flex'}}>
+            <div className={style.tab_block}>
                 <Tab value="one" active={current === 'one'} onClick={setCurrent}>
                     Булки
                 </Tab>

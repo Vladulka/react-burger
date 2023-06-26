@@ -4,3 +4,11 @@
     justify-content: center;
     align-items: center;
 }
+
+.name {
+    text-align: center;
+}
+
+.ingredient_card {
+    position: relative;
+}

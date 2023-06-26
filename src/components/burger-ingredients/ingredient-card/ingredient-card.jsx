@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 
 const IngredientCard = ({name, price, image, count}) => {
     return (
-        <div style={{position: "relative"}}>
+        <div className={style.ingredient_card}>
             {count && <Counter count={count} size="default" extraClass="m-1"/>}
             <img className="ml-4 mr-4" src={image} alt={name}/>
             <div className={`${style.price} mt-1 mb-1`}>
                 <p className="text text_type_digits-default mr-1">{price}</p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <p className={"text text_type_main-default"} style={{textAlign: "center"}}>
+            <p className={`text text_type_main-default ${style.ingredient_card}`} >
                 {name}
             </p>
         </div>
