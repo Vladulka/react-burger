@@ -1,5 +1,5 @@
 .burger_list {
-    max-height: calc(100vh - 470px);
+    max-height: calc(100vh - 580px);
     overflow: auto;
 }
 

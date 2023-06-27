@@ -8,14 +8,14 @@ import PropTypes from "prop-types";
 
      const ingredientsLockedData = useMemo(
          () => {
-             return ingredients.filter(ingredient => ingredient.isLocked)
+             return ingredients.filter(ingredient => ingredient.type === "bun" && ingredient.isLocked)
          },
          [ingredients]
      );
 
      const ingredientsNotLockedData = useMemo(
          () => {
-             return ingredients.filter(ingredient => !ingredient.isLocked)
+             return ingredients.filter(ingredient => ingredient.type !== "bun")
          },
          [ingredients]
      );
@@ -32,6 +32,13 @@ import PropTypes from "prop-types";
             <div className={style.burger_list}>
                 {
                     ingredientsNotLockedData.map((ingredient, index) =>
+                        <BurgerConstructorElement key={index} {...ingredient} />
+                    )
+                }
+            </div>
+            <div className={style.burger_list_locked}>
+                {
+                    ingredientsLockedData.map((ingredient, index) =>
                         <BurgerConstructorElement key={index} {...ingredient} />
                     )
                 }

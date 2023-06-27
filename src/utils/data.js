@@ -54,7 +54,6 @@ const data = [
         "image_mobile":"https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
         "image_large":"https://code.s3.yandex.net/react/code/sauce-02-large.png",
         "__v":0,
-        "isLocked": true
     },
     {
         "_id":"60666c42cc7b410027a1a9b4",
@@ -208,7 +207,8 @@ const data = [
         "image":"https://code.s3.yandex.net/react/code/bun-01.png",
         "image_mobile":"https://code.s3.yandex.net/react/code/bun-01-mobile.png",
         "image_large":"https://code.s3.yandex.net/react/code/bun-01-large.png",
-        "__v":0
+        "__v":0,
+        "isLocked": true
     }
 ];
 

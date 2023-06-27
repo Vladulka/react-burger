@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 const BurgerConstructorFooter = ({ingredients}) => {
 
-    const getTotal = useMemo(
+    const total = useMemo(
         () => {
             return ingredients.reduce((sum, a) => sum + a.price, 0);
         },
@@ -15,7 +15,7 @@ const BurgerConstructorFooter = ({ingredients}) => {
     return (
         <div className={`${style.total} mt-10`}>
             <div className={`${style.total_price} mr-10`}>
-                <p className="text text_type_digits-medium mr-2">{getTotal}</p>
+                <p className="text text_type_digits-medium mr-2">{total}</p>
                 <CurrencyIcon type="primary"/>
             </div>
             <Button htmlType="button" type="primary" size="large">
