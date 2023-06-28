@@ -6,6 +6,7 @@
     flex-direction: row;
     align-items: center;
 }
+
 .header {
     background: #1C1C21;
 }
@@ -30,6 +31,15 @@
 .header_li {
     display: flex;
     flex-direction: row;
+}
+
+.link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.link:focus, .link:hover, .link:visited, .link:link, .link:active {
+  text-decoration: none;
 }
 
 .header_login_btn {

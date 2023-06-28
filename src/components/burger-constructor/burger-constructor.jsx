@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
             <div className={style.burger_list_locked}>
                 {
                     ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} {...ingredient} />
+                        <BurgerConstructorElement key={index} elementType={'top'} {...ingredient} />
                     )
                 }
             </div>
@@ -39,7 +39,7 @@ import PropTypes from "prop-types";
             <div className={style.burger_list_locked}>
                 {
                     ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} {...ingredient} />
+                        <BurgerConstructorElement key={index} elementType={'bottom'} {...ingredient} />
                     )
                 }
             </div>
