@@ -3,7 +3,7 @@ import style from "./ingredient-block.module.css";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import PropTypes from "prop-types";
 
-const IngredientBlock = ({type, data}) => {
+const IngredientBlock = ({type, data, onModalClick}) => {
 
     const ingredients = useMemo(
         () => {
@@ -19,7 +19,7 @@ const IngredientBlock = ({type, data}) => {
             </p>
             <div className={`${style.ingredients} pl-4 pr-4`} >
                 {
-                    ingredients.map((ingredient, index) => <IngredientCard key={index} {...ingredient}/>)
+                    ingredients.map((ingredient, index) => <IngredientCard key={index} onModalClick={onModalClick} {...ingredient}/>)
                 }
             </div>
         </div>

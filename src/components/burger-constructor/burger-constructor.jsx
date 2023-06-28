@@ -4,7 +4,7 @@ import BurgerConstructorElement from "./burger-constructor-element/burger-constr
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
 import PropTypes from "prop-types";
 
- const BurgerConstructor = ({ingredients}) => {
+ const BurgerConstructor = ({ingredients, onModalClick}) => {
 
      const ingredientsLockedData = useMemo(
          () => {
@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
             <div className={style.burger_list_locked}>
                 {
                     ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} {...ingredient} />
+                        <BurgerConstructorElement key={index} elementType={'top'} {...ingredient} />
                     )
                 }
             </div>
@@ -39,11 +39,11 @@ import PropTypes from "prop-types";
             <div className={style.burger_list_locked}>
                 {
                     ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} {...ingredient} />
+                        <BurgerConstructorElement key={index} elementType={'bottom'} {...ingredient} />
                     )
                 }
             </div>
-            <BurgerConstructorFooter ingredients={ingredients} />
+            <BurgerConstructorFooter onModalClick={onModalClick} ingredients={ingredients} />
         </div>
     );
 }

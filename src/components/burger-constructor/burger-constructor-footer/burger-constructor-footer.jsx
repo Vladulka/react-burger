@@ -2,8 +2,9 @@ import React, {useMemo} from 'react';
 import style from "./burger-constructor-footer.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import OrderDetails from "../../modal-block/modal-body/order-details/order-details";
 
-const BurgerConstructorFooter = ({ingredients}) => {
+const BurgerConstructorFooter = ({ingredients, onModalClick}) => {
 
     const total = useMemo(
         () => {
@@ -18,7 +19,7 @@ const BurgerConstructorFooter = ({ingredients}) => {
                 <p className="text text_type_digits-medium mr-2">{total}</p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <Button htmlType="button" type="primary" size="large">
+            <Button htmlType="button" type="primary" size="large" onClick={onModalClick(<OrderDetails/>)}>
                 Оформить заказ
             </Button>
         </div>

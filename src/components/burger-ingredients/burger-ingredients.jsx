@@ -4,7 +4,7 @@ import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
 import PropTypes from 'prop-types';
 
-export default function BurgerIngredients ({ingredients}) {
+export default function BurgerIngredients ({ingredients, onModalClick}) {
 
     const [current, setCurrent] = React.useState('one');
 
@@ -26,7 +26,7 @@ export default function BurgerIngredients ({ingredients}) {
             </div>
             <div className={style.ingredients_block}>
                 {
-                    ["bun", "sauce", "main"].map((type, index) => <IngredientBlock key={index} type={type} data={ingredients}/>)
+                    ["bun", "sauce", "main"].map((type, index) => <IngredientBlock key={index} type={type} onModalClick={onModalClick} data={ingredients}/>)
                 }
             </div>
         </div>
