@@ -14,7 +14,9 @@ function App() {
 
     useEffect(() => {
         setAppState({...appState, isLoading: true});
-        getIngredientsData(appState, setAppState);
+        getIngredientsData().then(data => setAppState({...appState, data: data}))
+        .catch(e => console.log(e))
+        .finally(setAppState({...appState, isLoading: false}));
     }, []);
 
     return (
