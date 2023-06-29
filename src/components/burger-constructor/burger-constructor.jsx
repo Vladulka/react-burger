@@ -1,10 +1,11 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import style from "./burger-constructor.module.css"
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
 import PropTypes from "prop-types";
+import ModalBlock from "../modal-block/modal-block";
 
- const BurgerConstructor = ({ingredients, onModalClick}) => {
+ const BurgerConstructor = ({ingredients}) => {
 
      const ingredientsLockedData = useMemo(
          () => {
@@ -19,6 +20,19 @@ import PropTypes from "prop-types";
          },
          [ingredients]
      );
+
+     const [modal, setModal] = useState({
+         isVisible: false,
+         modalBody: null,
+     })
+
+     const onModalClick = (body) => (event) => {
+         setModal({modalBody: body, isVisible: true})
+     }
+
+     const onModalClose = () => {
+         setModal({...modal, isVisible: false})
+     }
 
     return (
         <div className={"mt-25"}>
@@ -44,6 +58,14 @@ import PropTypes from "prop-types";
                 }
             </div>
             <BurgerConstructorFooter onModalClick={onModalClick} ingredients={ingredients} />
+            {
+                modal.isVisible &&
+                <ModalBlock onModalClose={onModalClose}>
+                    {
+                        modal.modalBody
+                    }
+                </ModalBlock>
+            }
         </div>
     );
 }

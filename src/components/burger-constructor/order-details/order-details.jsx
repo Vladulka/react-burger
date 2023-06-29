@@ -1,6 +1,6 @@
 import React from 'react';
 import style from "./order-details.module.css";
-import done from "../../../../images/done.svg"
+import done from "../../../images/done.svg"
 
 const OrderDetails = () => {
     return (

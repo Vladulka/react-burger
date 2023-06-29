@@ -1,12 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
 import PropTypes from 'prop-types';
+import ModalBlock from "../modal-block/modal-block";
 
-export default function BurgerIngredients ({ingredients, onModalClick}) {
+export default function BurgerIngredients ({ingredients}) {
 
     const [current, setCurrent] = React.useState('one');
+
+    const [modal, setModal] = useState({
+        isVisible: false,
+        modalBody: null,
+    })
+
+    const onModalClick = (body) => (event) => {
+        setModal({modalBody: body, isVisible: true})
+    }
+
+    const onModalClose = () => {
+        setModal({...modal, isVisible: false})
+    }
 
     return (
         <div>
@@ -29,6 +43,14 @@ export default function BurgerIngredients ({ingredients, onModalClick}) {
                     ["bun", "sauce", "main"].map((type, index) => <IngredientBlock key={index} type={type} onModalClick={onModalClick} data={ingredients}/>)
                 }
             </div>
+            {
+                modal.isVisible &&
+                <ModalBlock onModalClose={onModalClose}>
+                    {
+                        modal.modalBody
+                    }
+                </ModalBlock>
+            }
         </div>
     );
 };

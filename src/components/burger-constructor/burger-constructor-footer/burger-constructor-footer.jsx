@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import style from "./burger-constructor-footer.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import OrderDetails from "../../modal-block/modal-body/order-details/order-details";
+import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructorFooter = ({ingredients, onModalClick}) => {
 

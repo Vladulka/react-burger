@@ -2,7 +2,7 @@ import React from 'react';
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
-import IngredientDetails from "../../modal-block/modal-body/ingredient-details/ingredient-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const IngredientCard = ({onModalClick, ...ingredient}) => {
     return (

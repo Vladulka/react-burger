@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './ingredient-details.module.css';
+import style from './ingredient-details.module.css'
 import PropTypes from "prop-types";
 
 const IngredientDetails = ({ingredient}) => {
