@@ -20,7 +20,7 @@ const BurgerConstructorElement = ({name, price, image, isLocked = false, element
 
 BurgerConstructorElement.propTypes = {
     name: PropTypes.string.isRequired,
-    elementType: PropTypes.string.isRequired,
+    elementType: PropTypes.string,
     price: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
     isLocked: PropTypes.bool,

@@ -5,6 +5,7 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor"
 import ModalBlock from "../modal-block/modal-block";
 import {getIngredientsData} from "../../utils/api";
+import {BurgerContext} from "../../context/BurgerContext";
 
 function App() {
     const [appState, setAppState] = useState({
@@ -25,10 +26,10 @@ function App() {
             <main className={styles.main}>
                 {
                     !appState.loading && appState.data &&
-                    <>
+                    <BurgerContext.Provider value={appState.data}>
                         <BurgerIngredients ingredients={appState.data}/>
                         <BurgerConstructor ingredients={appState.data}/>
-                    </>
+                    </BurgerContext.Provider>
                 }
             </main>
 
