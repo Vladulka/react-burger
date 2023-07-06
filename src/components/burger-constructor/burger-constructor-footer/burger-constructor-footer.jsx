@@ -1,37 +1,37 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useContext, useMemo, useReducer, useState} from 'react';
 import style from "./burger-constructor-footer.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import OrderDetails from "../order-details/order-details";
 import {getOrderDetailsData} from "../../../utils/api";
 import ModalBlock from "../../modal-block/modal-block";
 import {BurgerContext} from "../../../context/BurgerContext";
 
+const initialState =  { count: 0 };
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "increment":
+            return { count: state.count + action.price };
+        case "buns":
+            return { count: state.count + action.price * 2};
+        default:
+            throw new Error(`Wrong type of action: ${action.type}`);
+    }
+}
 
 const BurgerConstructorFooter = () => {
 
     const ingredients = useContext(BurgerContext);
 
     const [modal, setModal] = useState(false);
-    const [state, dispatch] = useReducer(reducer, { count: 0 });
+    const [state, dispatch] = useReducer(reducer, initialState);
     const [orderDetails, setOrderDetails] = useState({ orderData: {}, isLoading: false, hasError: false});
 
-    function reducer(state, action) {
-        switch (action.type) {
-            case "increment":
-                return { count: state.count + action.price };
-            case "decrement":
-                return { count: state.count - action.price };
-            case "buns":
-                return { count: state.count + action.price * 2};
-            default:
-                throw new Error(`Wrong type of action: ${action.type}`);
-        }
-    }
-
     useMemo(() => {
-        dispatch({type: "buns", price: ingredients.filter(ingredient => ingredient.type === "bun")[0].price})
-        ingredients.filter(ingredient => ingredient.type !== "bun").map(ingredient => dispatch({type: "increment", price: ingredient.price}))
+        const total = ingredients.filter(ingredient => ingredient.type !== "bun").reduce((sum, a) => sum + a.price, 0);
+
+        dispatch({type: "buns", price: ingredients.find(ingredient => ingredient.type === "bun").price})
+        dispatch({type: "increment", price: total})
     }, [ingredients]);
 
     const onModalClick = () => {
@@ -65,19 +65,11 @@ const BurgerConstructorFooter = () => {
             {
                 !orderDetails.isLoading && orderDetails.orderData.order && modal &&
                 <ModalBlock onModalClose={onModalClose}>
-                    {
-                        <OrderDetails orderData={orderDetails.orderData} />
-                    }
+                    <OrderDetails orderData={orderDetails.orderData} />
                 </ModalBlock>
             }
         </div>
     );
 };
-
-BurgerConstructorFooter.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        price: PropTypes.number.isRequired,
-    })).isRequired,
-}
 
 export default BurgerConstructorFooter;
