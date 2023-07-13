@@ -1,9 +1,12 @@
-import React, {useMemo} from 'react';
+import React, {useContext, useMemo} from 'react';
 import style from "./ingredient-block.module.css";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import PropTypes from "prop-types";
+import {BurgerContext} from "../../../context/BurgerContext";
 
-const IngredientBlock = ({type, data, onModalClick}) => {
+const IngredientBlock = ({type, onModalClick}) => {
+
+    const data = useContext(BurgerContext);
 
     const ingredients = useMemo(
         () => {
@@ -27,18 +30,7 @@ const IngredientBlock = ({type, data, onModalClick}) => {
 };
 
 IngredientBlock.propTypes = {
-    type: PropTypes.string.isRequired,
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-    })).isRequired,
+    type: PropTypes.string.isRequired
 }
 
 export default IngredientBlock;

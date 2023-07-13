@@ -1,15 +1,17 @@
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import style from "./burger-constructor.module.css"
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
 import PropTypes from "prop-types";
-import ModalBlock from "../modal-block/modal-block";
+import {BurgerContext} from "../../context/BurgerContext";
 
- const BurgerConstructor = ({ingredients}) => {
+ const BurgerConstructor = () => {
+
+     const ingredients = useContext(BurgerContext);
 
      const ingredientsLockedData = useMemo(
          () => {
-             return ingredients.filter(ingredient => ingredient.type === "bun" && ingredient.isLocked)
+             return ingredients.filter(ingredient => ingredient.type === "bun")[0];
          },
          [ingredients]
      );
@@ -21,27 +23,10 @@ import ModalBlock from "../modal-block/modal-block";
          [ingredients]
      );
 
-     const [modal, setModal] = useState({
-         isVisible: false,
-         modalBody: null,
-     })
-
-     const onModalClick = (body) => (event) => {
-         setModal({modalBody: body, isVisible: true})
-     }
-
-     const onModalClose = () => {
-         setModal({...modal, isVisible: false})
-     }
-
     return (
         <div className={"mt-25"}>
             <div className={style.burger_list_locked}>
-                {
-                    ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} elementType={'top'} {...ingredient} />
-                    )
-                }
+                <BurgerConstructorElement elementType={'top'} isLocked {...ingredientsLockedData} />
             </div>
             <div className={style.burger_list}>
                 {
@@ -51,21 +36,9 @@ import ModalBlock from "../modal-block/modal-block";
                 }
             </div>
             <div className={style.burger_list_locked}>
-                {
-                    ingredientsLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} elementType={'bottom'} {...ingredient} />
-                    )
-                }
+                <BurgerConstructorElement elementType={'bottom'} isLocked {...ingredientsLockedData} />
             </div>
-            <BurgerConstructorFooter onModalClick={onModalClick} ingredients={ingredients} />
-            {
-                modal.isVisible &&
-                <ModalBlock onModalClose={onModalClose}>
-                    {
-                        modal.modalBody
-                    }
-                </ModalBlock>
-            }
+            <BurgerConstructorFooter ingredients={ingredients} />
         </div>
     );
 }
