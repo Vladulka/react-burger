@@ -1,13 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
 import PropTypes from 'prop-types';
 import ModalBlock from "../modal-block/modal-block";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import { useInView } from 'react-intersection-observer';
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
+
+    const { ref: refBun, inView: inViewBun } = useInView({
+        threshold: 0
+    });
+    const { ref: refSauce, inView: inViewSauce } = useInView({
+        threshold: 0
+    });
+    const { ref: refMain, inView: inViewMain } = useInView({
+        threshold: 0
+    });
+
+    useEffect(() => {
+        if (inViewBun) {
+            setCurrent('one');
+        } else if (inViewSauce) {
+            setCurrent('two');
+        } else if (inViewMain) {
+            setCurrent('three');
+        }
+    }, [inViewBun, inViewSauce, inViewMain])
 
     const [modal, setModal] = useState({
         isVisible: false,
@@ -39,9 +62,9 @@ export default function BurgerIngredients () {
                 </Tab>
             </div>
             <div className={style.ingredients_block}>
-                {
-                    ["bun", "sauce", "main"].map((type, index) => <IngredientBlock key={index} type={type} onModalClick={onModalClick}/>)
-                }
+                <IngredientBlock type={"bun"} lookRef={refBun} onModalClick={onModalClick}/>
+                <IngredientBlock type={"sauce"} lookRef={refSauce} onModalClick={onModalClick}/>
+                <IngredientBlock type={"main"} lookRef={refMain} onModalClick={onModalClick}/>
             </div>
             {
                 modal.isVisible &&
