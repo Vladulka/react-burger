@@ -5,14 +5,22 @@ import IngredientBlock from "./ingredient-block/ingredient-block";
 import ModalBlock from "../modal-block/modal-block";
 import { useInView } from 'react-intersection-observer';
 import {useDispatch} from "react-redux";
-import {GET_INGREDIENT_DETAIL} from "../../services/actions";
+import {GET_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
 import IngredientDetails from "./ingredient-details/ingredient-details";
+import {getAllIngredients} from "../../services/actions/all-ingredients";
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
 
     const dispatch = useDispatch();
+
+    useEffect(
+        () => {
+            dispatch(getAllIngredients());
+        },
+        [dispatch]
+    );
 
     const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0 });
     const { ref: refSauce, inView: inViewSauce } = useInView({ threshold: 0});

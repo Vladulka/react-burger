@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-card.module.css";
 import PropTypes from "prop-types";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 
@@ -43,7 +42,7 @@ const IngredientCard = ({onModalClick, data}) => {
 };
 
 IngredientCard.propTypes = {
-    ingredient: PropTypes.objectOf(PropTypes.shape({
+    data: PropTypes.objectOf(PropTypes.shape({
         _id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,

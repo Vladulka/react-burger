@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import style from "./ingredient-block.module.css";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import PropTypes from "prop-types";
@@ -33,6 +33,9 @@ const IngredientBlock = ({type, onModalClick, lookRef}) => {
 IngredientBlock.propTypes = {
     type: PropTypes.string.isRequired,
     onModalClick: PropTypes.func.isRequired,
+    lookRef: PropTypes.oneOfType([
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ])
 }
 
 export default IngredientBlock;

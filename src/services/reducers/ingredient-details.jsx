@@ -1,4 +1,4 @@
-import {DEL_INGREDIENT_DETAIL, GET_INGREDIENT_DETAIL} from "../actions";
+import {DEL_INGREDIENT_DETAIL, GET_INGREDIENT_DETAIL} from "../actions/ingredient-details";
 
 const initialData = {
     currentIngredient: {}

@@ -1,9 +1,7 @@
 import {
-    GET_ALL_INGREDIENTS_FAILED,
-    GET_ALL_INGREDIENTS_REQUEST,
-    GET_ALL_INGREDIENTS_SUCCESS, GET_ORDER_FAILED,
+    GET_ORDER_FAILED,
     GET_ORDER_REQUEST, GET_ORDER_SUCCESS
-} from "../actions";
+} from "../actions/order-details";
 
 const initialData = {
     order: {},
@@ -29,7 +27,7 @@ export const orderDetailsReducer = (state = initialData, action) => {
         }
         case GET_ORDER_FAILED: {
             return {
-                ...state,
+                order: {},
                 orderFailed: true,
                 orderRequest: false
             };

@@ -1,4 +1,4 @@
-import {ADD_BUN, ADD_INGREDIENT, DEL_INGREDIENT, SORT_INGREDIENTS} from "../actions";
+import {ADD_BUN, ADD_INGREDIENT, DEL_INGREDIENT, SORT_INGREDIENTS, DROP_CONSTRUCTOR} from "../actions/burger-constructor";
 
 const initialData = {
     items: [],
@@ -35,6 +35,11 @@ export const burgerConstructorReducer = (state = initialData, action) => {
             return {
                 ...state,
                 items: newItems
+            }
+        }
+        case DROP_CONSTRUCTOR: {
+            return {
+                ...initialData
             }
         }
         default: {

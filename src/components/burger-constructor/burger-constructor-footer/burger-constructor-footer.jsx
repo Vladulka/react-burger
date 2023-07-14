@@ -4,7 +4,7 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import OrderDetails from "../order-details/order-details";
 import ModalBlock from "../../modal-block/modal-block";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrderDetails} from "../../../services/actions";
+import {getOrderDetails} from "../../../services/actions/order-details";
 
 const initialState =  { count: 0 };
 
@@ -25,25 +25,26 @@ const BurgerConstructorFooter = () => {
 
     const dispatchRedux = useDispatch();
 
-    const ingredients = useSelector(store => store.burgerConstructor.items);
-    const bun = useSelector(store => store.burgerConstructor.bun);
-
-    const orderDetails = useSelector(store => store.orderDetails.order);
-    const orderDetailsRequest = useSelector(store => store.orderDetails.orderRequest);
+    const {items, bun} = useSelector(store => store.burgerConstructor);
+    const {order, orderRequest} = useSelector(store => store.orderDetails);
 
     const [modal, setModal] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         dispatch({type: "drop"})
-        const total = ingredients.reduce((sum, a) => sum + a.price, 0);
+        const total = items.reduce((sum, a) => sum + a.price, 0);
         dispatch({type: "buns", price: bun.price})
         dispatch({type: "increment", price: total})
-    }, [bun, ingredients]);
+    }, [bun, items]);
 
     const onModalClick = () => {
-        dispatchRedux(getOrderDetails(...ingredients.map(({ _id }) => _id), bun.itemID, bun.itemID));
-        setModal(true);
+        if (bun._id) {
+            dispatchRedux(getOrderDetails(...items.map(({ _id }) => _id), bun.itemID, bun.itemID));
+            setModal(true);
+        } else {
+            alert("Выберите булку!")
+        }
     }
 
     const onModalClose = () => {
@@ -60,7 +61,7 @@ const BurgerConstructorFooter = () => {
                 Оформить заказ
             </Button>
             {
-                orderDetails && !orderDetailsRequest && modal &&
+                order && !orderRequest && modal &&
                 <ModalBlock onModalClose={onModalClose}>
                     <OrderDetails />
                 </ModalBlock>
