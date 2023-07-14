@@ -1,8 +1,12 @@
 import React from 'react';
 import style from './ingredient-details.module.css'
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
-const IngredientDetails = ({ingredient}) => {
+const IngredientDetails = () => {
+
+    const ingredient = useSelector(store => store.ingredientDetails.currentIngredient);
+
     return (
         <div className={"pt-10 pl-10 pr-10"}>
             <div className={style.details_header}>

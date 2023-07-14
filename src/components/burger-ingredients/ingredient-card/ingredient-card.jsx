@@ -27,9 +27,8 @@ const IngredientCard = ({onModalClick, card}) => {
         })
     });
 
-
     return (
-        <div ref={dragRef} className={style.ingredient_card} onClick={onModalClick(<IngredientDetails ingredient={card}/>)}>
+        <div ref={dragRef} className={style.ingredient_card} onClick={onModalClick(card)}>
             {counter > 0 && <Counter count={counter} size="default" extraClass="m-1"/>}
             <img className="ml-4 mr-4" src={card.image} alt={card.name}/>
             <div className={`${style.price} mt-1 mb-1`}>

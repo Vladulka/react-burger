@@ -4,13 +4,17 @@ import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
 import PropTypes from 'prop-types';
 import ModalBlock from "../modal-block/modal-block";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
 import { useInView } from 'react-intersection-observer';
+import {useDispatch} from "react-redux";
+import {ADD_BUN, GET_INGREDIENT_DETAIL} from "../../services/actions";
+import OrderDetails from "../burger-constructor/order-details/order-details";
+import IngredientDetails from "./ingredient-details/ingredient-details";
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
+
+    const dispatch = useDispatch();
 
     const { ref: refBun, inView: inViewBun } = useInView({
         threshold: 0
@@ -32,17 +36,16 @@ export default function BurgerIngredients () {
         }
     }, [inViewBun, inViewSauce, inViewMain])
 
-    const [modal, setModal] = useState({
-        isVisible: false,
-        modalBody: null,
-    })
+    const [modal, setModal] = useState(false)
 
-    const onModalClick = (body) => (event) => {
-        setModal({modalBody: body, isVisible: true})
+    const onModalClick = (ingredient) => (event) => {
+        dispatch({ type: GET_INGREDIENT_DETAIL, currentIngredient: ingredient})
+        setModal(true)
     }
 
     const onModalClose = () => {
-        setModal({...modal, isVisible: false})
+        dispatch({ type: GET_INGREDIENT_DETAIL })
+        setModal(false)
     }
 
     return (
@@ -67,11 +70,9 @@ export default function BurgerIngredients () {
                 <IngredientBlock type={"main"} lookRef={refMain} onModalClick={onModalClick}/>
             </div>
             {
-                modal.isVisible &&
+                modal &&
                 <ModalBlock onModalClose={onModalClose}>
-                    {
-                        modal.modalBody
-                    }
+                    <IngredientDetails />
                 </ModalBlock>
             }
         </div>

@@ -4,7 +4,8 @@ import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-comp
 import OrderDetails from "../order-details/order-details";
 import {getOrderDetailsData} from "../../../utils/api";
 import ModalBlock from "../../modal-block/modal-block";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getOrderDetails} from "../../../services/actions";
 
 const initialState =  { count: 0 };
 
@@ -23,12 +24,15 @@ function reducer(state, action) {
 
 const BurgerConstructorFooter = () => {
 
+    const dispatchRedux = useDispatch();
+
     const ingredients = useSelector(store => store.burgerConstructor.items);
     const bun = useSelector(store => store.burgerConstructor.bun);
 
+    const orderDetails = useSelector(store => store.orderDetails.order);
+
     const [modal, setModal] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [orderDetails, setOrderDetails] = useState({ orderData: {}, isLoading: false, hasError: false});
 
     useEffect(() => {
         dispatch({type: "drop"})
@@ -38,21 +42,11 @@ const BurgerConstructorFooter = () => {
     }, [bun, ingredients]);
 
     const onModalClick = () => {
-        setOrderDetails({...orderDetails, isLoading: true})
-        getOrderDetailsData(ingredients.map(_id => _id))
-            .then(data => {
-                setOrderDetails({...orderDetails, orderData: data})
-            })
-            .catch(e => console.log(e))
-            .finally(
-                setOrderDetails({...orderDetails, isLoading: false}),
-                setModal(true)
-            );
-
+        dispatchRedux(getOrderDetails(ingredients.map(({ _id }) => _id)));
+        setModal(true);
     }
 
     const onModalClose = () => {
-        setOrderDetails({...orderDetails, orderData: {}});
         setModal(false);
     }
 
@@ -66,9 +60,9 @@ const BurgerConstructorFooter = () => {
                 Оформить заказ
             </Button>
             {
-                !orderDetails.isLoading && orderDetails.orderData.order && modal &&
+                orderDetails && modal &&
                 <ModalBlock onModalClose={onModalClose}>
-                    <OrderDetails orderData={orderDetails.orderData} />
+                    <OrderDetails />
                 </ModalBlock>
             }
         </div>
