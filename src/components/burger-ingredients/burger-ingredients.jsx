@@ -14,15 +14,9 @@ export default function BurgerIngredients () {
 
     const dispatch = useDispatch();
 
-    const { ref: refBun, inView: inViewBun } = useInView({
-        threshold: 0
-    });
-    const { ref: refSauce, inView: inViewSauce } = useInView({
-        threshold: 0
-    });
-    const { ref: refMain, inView: inViewMain } = useInView({
-        threshold: 0
-    });
+    const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0 });
+    const { ref: refSauce, inView: inViewSauce } = useInView({ threshold: 0});
+    const { ref: refMain, inView: inViewMain } = useInView({ threshold: 0 });
 
     useEffect(() => {
         if (inViewBun) {

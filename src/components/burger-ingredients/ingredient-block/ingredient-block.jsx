@@ -23,7 +23,7 @@ const IngredientBlock = ({type, onModalClick, lookRef}) => {
             </p>
             <div className={`${style.ingredients} pl-4 pr-4`} >
                 {
-                    !ingredientsRequest && ingredients.map((ingredient, index) => <IngredientCard key={index} onModalClick={onModalClick} card={ingredient}/>)
+                    !ingredientsRequest && ingredients.map((ingredient, index) => <IngredientCard key={index} onModalClick={onModalClick} data={ingredient}/>)
                 }
             </div>
         </div>
@@ -31,7 +31,8 @@ const IngredientBlock = ({type, onModalClick, lookRef}) => {
 };
 
 IngredientBlock.propTypes = {
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    onModalClick: PropTypes.func.isRequired,
 }
 
 export default IngredientBlock;

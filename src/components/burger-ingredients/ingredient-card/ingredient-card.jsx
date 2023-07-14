@@ -6,37 +6,37 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 
-const IngredientCard = ({onModalClick, card}) => {
+const IngredientCard = ({onModalClick, data}) => {
 
-    const [counter, setCounter] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
     const { items, bun } = useSelector(state => state.burgerConstructor);
 
     useEffect(() => {
-        if (bun._id === card._id) {
-            setCounter(1)
+        if (bun._id === data._id) {
+            setTotalCount(1)
         } else {
-            setCounter(items.filter(ingredient => ingredient._id === card._id).length);
+            setTotalCount(items.filter(ingredient => ingredient._id === data._id).length);
         }
-    }, [items, bun, card._id]);
+    }, [items, bun, data._id]);
 
-    const [{ isDrag }, dragRef] = useDrag({
+    const [, dragRef] = useDrag({
         type: 'ingredients',
-        item: { card },
+        item: { data },
         collect: (monitor) => ({
             isDrag: monitor.isDragging()
         })
     });
 
     return (
-        <div ref={dragRef} className={style.ingredient_card} onClick={onModalClick(card)}>
-            {counter > 0 && <Counter count={counter} size="default" extraClass="m-1"/>}
-            <img className="ml-4 mr-4" src={card.image} alt={card.name}/>
+        <div ref={dragRef} className={style.ingredient_card} onClick={onModalClick(data)}>
+            {totalCount > 0 && <Counter count={totalCount} size="default" extraClass="m-1"/>}
+            <img className="ml-4 mr-4" src={data.image} alt={data.name}/>
             <div className={`${style.price} mt-1 mb-1`}>
-                <p className="text text_type_digits-default mr-1">{card.price}</p>
+                <p className="text text_type_digits-default mr-1">{data.price}</p>
                 <CurrencyIcon type="primary"/>
             </div>
             <p className={`text text_type_main-default mb-8 ${style.ingredient_card}`} >
-                {card.name}
+                {data.name}
             </p>
         </div>
     );
@@ -44,12 +44,13 @@ const IngredientCard = ({onModalClick, card}) => {
 
 IngredientCard.propTypes = {
     ingredient: PropTypes.objectOf(PropTypes.shape({
+        _id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
         count: PropTypes.number,
     })),
-    onModalClick: PropTypes.func
+    onModalClick: PropTypes.func.isRequired
 }
 
 

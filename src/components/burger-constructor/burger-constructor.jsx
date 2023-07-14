@@ -13,7 +13,7 @@ import {useDrop} from "react-dnd";
      const [, dropRef] = useDrop({
          accept: 'ingredients',
          drop(item) {
-             onDropHandler(item.card)
+             onDropHandler(item.data)
          }
      });
 
