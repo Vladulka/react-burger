@@ -19,13 +19,11 @@ export default function BurgerIngredients () {
     const { ref: refMain, inView: inViewMain } = useInView({ threshold: 0 });
 
     useEffect(() => {
-        if (inViewBun) {
-            setCurrent('one');
-        } else if (inViewSauce) {
-            setCurrent('two');
-        } else if (inViewMain) {
-            setCurrent('three');
-        }
+        inViewBun
+            ? setCurrent('one')
+            : inViewSauce
+                ? setCurrent('two')
+                : setCurrent('three')
     }, [inViewBun, inViewSauce, inViewMain])
 
     const [modal, setModal] = useState(false)
