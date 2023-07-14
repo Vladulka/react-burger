@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
-import PropTypes from 'prop-types';
 import ModalBlock from "../modal-block/modal-block";
 import { useInView } from 'react-intersection-observer';
 import {useDispatch} from "react-redux";
-import {ADD_BUN, GET_INGREDIENT_DETAIL} from "../../services/actions";
-import OrderDetails from "../burger-constructor/order-details/order-details";
+import {GET_INGREDIENT_DETAIL} from "../../services/actions";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 
 export default function BurgerIngredients () {
@@ -78,17 +76,3 @@ export default function BurgerIngredients () {
         </div>
     );
 };
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-    })).isRequired,
-}

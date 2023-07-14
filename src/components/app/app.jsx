@@ -23,9 +23,9 @@ function App() {
     const onDropHandler = (item) => {
         const key = uuidv4();
         if (item.type === "bun") {
-            dispatch({ type: ADD_BUN, bun: {...item, constructorId: key} })
+            dispatch({ type: ADD_BUN, bun: {...item, itemID: key} })
         } else {
-            dispatch({ type: ADD_INGREDIENT, item: {...item, constructorId: key} })
+            dispatch({ type: ADD_INGREDIENT, item: {...item, itemID: key} })
         }
     }
 

@@ -1,8 +1,7 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import style from "./burger-constructor-footer.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "../order-details/order-details";
-import {getOrderDetailsData} from "../../../utils/api";
 import ModalBlock from "../../modal-block/modal-block";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../../services/actions";
@@ -30,6 +29,7 @@ const BurgerConstructorFooter = () => {
     const bun = useSelector(store => store.burgerConstructor.bun);
 
     const orderDetails = useSelector(store => store.orderDetails.order);
+    const orderDetailsRequest = useSelector(store => store.orderDetails.orderRequest);
 
     const [modal, setModal] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -42,7 +42,7 @@ const BurgerConstructorFooter = () => {
     }, [bun, ingredients]);
 
     const onModalClick = () => {
-        dispatchRedux(getOrderDetails(ingredients.map(({ _id }) => _id)));
+        dispatchRedux(getOrderDetails(...ingredients.map(({ _id }) => _id), bun.itemID, bun.itemID));
         setModal(true);
     }
 
@@ -60,7 +60,7 @@ const BurgerConstructorFooter = () => {
                 Оформить заказ
             </Button>
             {
-                orderDetails && modal &&
+                orderDetails && !orderDetailsRequest && modal &&
                 <ModalBlock onModalClose={onModalClose}>
                     <OrderDetails />
                 </ModalBlock>

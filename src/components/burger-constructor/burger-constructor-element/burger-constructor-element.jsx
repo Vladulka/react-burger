@@ -5,7 +5,7 @@ import {DEL_INGREDIENT, SORT_INGREDIENTS} from "../../../services/actions";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 
-const BurgerConstructorElement = ({constructorId, name, price, image, isLocked = false, elementType = "main", index}) => {
+const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false, elementType = "main", index}) => {
 
     const ref = useRef(null);
     const dispatch = useDispatch();
@@ -43,7 +43,7 @@ const BurgerConstructorElement = ({constructorId, name, price, image, isLocked =
     const [{ isDragging }, dragSort] = useDrag({
         type: 'ingredientSort',
         item: {
-            id: constructorId,
+            id: itemID,
             index: index
         },
         collect: (monitor) => ({
@@ -56,11 +56,11 @@ const BurgerConstructorElement = ({constructorId, name, price, image, isLocked =
 
     const handleClose = (e) => {
         e.preventDefault();
-        dispatch({ type: DEL_INGREDIENT, id: constructorId })
+        dispatch({ type: DEL_INGREDIENT, id: itemID })
     }
 
     return (
-        <div ref={ref} style={{ opacity }} key={constructorId}>
+        <div ref={ref} style={{ opacity }} key={itemID}>
             {!isLocked && <DragIcon type="primary"/>}
             <ConstructorElement
                 type={elementType}

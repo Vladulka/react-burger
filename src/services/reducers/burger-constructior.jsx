@@ -23,7 +23,7 @@ export const burgerConstructorReducer = (state = initialData, action) => {
             return {
                 ...state,
                 items: state.items.filter(item => {
-                    return item.constructorId !== action.id
+                    return item.itemID !== action.id
                 })
             }
         }

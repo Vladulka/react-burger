@@ -1,8 +1,7 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React from 'react';
 import style from "./burger-constructor.module.css"
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
-import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import {useDrop} from "react-dnd";
 
@@ -26,14 +25,14 @@ import {useDrop} from "react-dnd";
             <div className={style.burger_list}>
                 {
                     ingredients && ingredients.map((ingredient, index) =>
-                        <BurgerConstructorElement key={ingredient.constructorId} index={index} {...ingredient} />
+                        <BurgerConstructorElement key={ingredient.itemID} index={index} {...ingredient} />
                     )
                 }
             </div>
             <div className={style.burger_list_locked}>
                 {bun._id && <BurgerConstructorElement elementType={'bottom'} isLocked {...bun} />}
             </div>
-            <BurgerConstructorFooter ingredients={ingredients} />
+            <BurgerConstructorFooter />
         </div>
     );
 }
