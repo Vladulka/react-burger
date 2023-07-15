@@ -1,39 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor"
-import ModalBlock from "../modal-block/modal-block";
-import {getIngredientsData} from "../../utils/api";
-import {BurgerContext} from "../../context/BurgerContext";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllIngredients} from "../../services/actions/all-ingredients";
+import {ADD_BUN, ADD_INGREDIENT} from "../../services/actions/burger-constructor";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-    const [appState, setAppState] = useState({
-        isLoading: false,
-        data: null,
-    });
 
-    useEffect(() => {
-        setAppState({...appState, isLoading: true});
-        getIngredientsData().then(data => setAppState({...appState, data: data}))
-        .catch(e => console.log(e))
-        .finally(setAppState({...appState, isLoading: false}));
-    }, []);
+    const dispatch = useDispatch();
+
+    const onDropHandler = (item) => {
+        const key = uuidv4();
+        if (item.type === "bun") {
+            dispatch({ type: ADD_BUN, bun: {...item, itemID: key} })
+        } else {
+            dispatch({ type: ADD_INGREDIENT, item: {...item, itemID: key} })
+        }
+    }
 
     return (
-        <div>
+        <DndProvider backend={HTML5Backend}>
             <AppHeader/>
             <main className={styles.main}>
-                {
-                    !appState.loading && appState.data &&
-                    <BurgerContext.Provider value={appState.data}>
-                        <BurgerIngredients ingredients={appState.data}/>
-                        <BurgerConstructor ingredients={appState.data}/>
-                    </BurgerContext.Provider>
-                }
+                <BurgerIngredients />
+                <BurgerConstructor onDropHandler={onDropHandler} />
             </main>
 
-        </div>
+        </DndProvider>
     );
 }
 

@@ -1,60 +1,40 @@
-import React, {useContext, useMemo, useState} from 'react';
+import React from 'react';
 import style from "./burger-constructor.module.css"
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
-import PropTypes from "prop-types";
-import {BurgerContext} from "../../context/BurgerContext";
+import {useSelector} from "react-redux";
+import {useDrop} from "react-dnd";
 
- const BurgerConstructor = () => {
+ const BurgerConstructor = ({onDropHandler}) => {
 
-     const ingredients = useContext(BurgerContext);
+     const ingredients = useSelector(store => store.burgerConstructor.items);
+     const bun = useSelector(store => store.burgerConstructor.bun);
 
-     const ingredientsLockedData = useMemo(
-         () => {
-             return ingredients.filter(ingredient => ingredient.type === "bun")[0];
-         },
-         [ingredients]
-     );
-
-     const ingredientsNotLockedData = useMemo(
-         () => {
-             return ingredients.filter(ingredient => ingredient.type !== "bun")
-         },
-         [ingredients]
-     );
+     const [, dropRef] = useDrop({
+         accept: 'ingredients',
+         drop(item) {
+             onDropHandler(item.data)
+         }
+     });
 
     return (
-        <div className={"mt-25"}>
+        <div className={"mt-25"} ref={dropRef}>
             <div className={style.burger_list_locked}>
-                <BurgerConstructorElement elementType={'top'} isLocked {...ingredientsLockedData} />
+                {bun._id && <BurgerConstructorElement elementType={'top'} isLocked {...bun} />}
             </div>
             <div className={style.burger_list}>
                 {
-                    ingredientsNotLockedData.map((ingredient, index) =>
-                        <BurgerConstructorElement key={index} {...ingredient} />
+                    ingredients && ingredients.map((ingredient, index) =>
+                        <BurgerConstructorElement key={ingredient.itemID} index={index} {...ingredient} />
                     )
                 }
             </div>
             <div className={style.burger_list_locked}>
-                <BurgerConstructorElement elementType={'bottom'} isLocked {...ingredientsLockedData} />
+                {bun._id && <BurgerConstructorElement elementType={'bottom'} isLocked {...bun} />}
             </div>
-            <BurgerConstructorFooter ingredients={ingredients} />
+            <BurgerConstructorFooter />
         </div>
     );
-}
-
-BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-    })).isRequired,
 }
 
 export default BurgerConstructor;

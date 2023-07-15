@@ -1,25 +1,49 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
-import PropTypes from 'prop-types';
 import ModalBlock from "../modal-block/modal-block";
+import { useInView } from 'react-intersection-observer';
+import {useDispatch} from "react-redux";
+import {GET_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
+import IngredientDetails from "./ingredient-details/ingredient-details";
+import {getAllIngredients} from "../../services/actions/all-ingredients";
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
 
-    const [modal, setModal] = useState({
-        isVisible: false,
-        modalBody: null,
-    })
+    const dispatch = useDispatch();
 
-    const onModalClick = (body) => (event) => {
-        setModal({modalBody: body, isVisible: true})
+    useEffect(
+        () => {
+            dispatch(getAllIngredients());
+        },
+        [dispatch]
+    );
+
+    const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0 });
+    const { ref: refSauce, inView: inViewSauce } = useInView({ threshold: 0});
+    const { ref: refMain, inView: inViewMain } = useInView({ threshold: 0 });
+
+    useEffect(() => {
+        inViewBun
+            ? setCurrent('one')
+            : inViewSauce
+                ? setCurrent('two')
+                : setCurrent('three')
+    }, [inViewBun, inViewSauce, inViewMain])
+
+    const [modal, setModal] = useState(false)
+
+    const onModalClick = (ingredient) => (event) => {
+        dispatch({ type: GET_INGREDIENT_DETAIL, currentIngredient: ingredient})
+        setModal(true)
     }
 
     const onModalClose = () => {
-        setModal({...modal, isVisible: false})
+        dispatch({ type: GET_INGREDIENT_DETAIL })
+        setModal(false)
     }
 
     return (
@@ -39,32 +63,16 @@ export default function BurgerIngredients () {
                 </Tab>
             </div>
             <div className={style.ingredients_block}>
-                {
-                    ["bun", "sauce", "main"].map((type, index) => <IngredientBlock key={index} type={type} onModalClick={onModalClick}/>)
-                }
+                <IngredientBlock type={"bun"} lookRef={refBun} onModalClick={onModalClick}/>
+                <IngredientBlock type={"sauce"} lookRef={refSauce} onModalClick={onModalClick}/>
+                <IngredientBlock type={"main"} lookRef={refMain} onModalClick={onModalClick}/>
             </div>
             {
-                modal.isVisible &&
+                modal &&
                 <ModalBlock onModalClose={onModalClose}>
-                    {
-                        modal.modalBody
-                    }
+                    <IngredientDetails />
                 </ModalBlock>
             }
         </div>
     );
 };
-
-BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-    })).isRequired,
-}
