@@ -32,10 +32,7 @@ const IngredientBlock = ({type, onModalClick, lookRef}) => {
 
 IngredientBlock.propTypes = {
     type: PropTypes.string.isRequired,
-    onModalClick: PropTypes.func.isRequired,
-    lookRef: PropTypes.oneOfType([
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ])
+    onModalClick: PropTypes.func.isRequired
 }
 
 export default IngredientBlock;

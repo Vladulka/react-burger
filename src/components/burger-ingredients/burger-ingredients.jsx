@@ -8,10 +8,13 @@ import {useDispatch} from "react-redux";
 import {GET_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
 import IngredientDetails from "./ingredient-details/ingredient-details";
 import {getAllIngredients} from "../../services/actions/all-ingredients";
+import {useNavigate} from "react-router-dom";
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
+
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -34,16 +37,8 @@ export default function BurgerIngredients () {
                 : setCurrent('three')
     }, [inViewBun, inViewSauce, inViewMain])
 
-    const [modal, setModal] = useState(false)
-
     const onModalClick = (ingredient) => (event) => {
         dispatch({ type: GET_INGREDIENT_DETAIL, currentIngredient: ingredient})
-        setModal(true)
-    }
-
-    const onModalClose = () => {
-        dispatch({ type: GET_INGREDIENT_DETAIL })
-        setModal(false)
     }
 
     return (
@@ -67,12 +62,6 @@ export default function BurgerIngredients () {
                 <IngredientBlock type={"sauce"} lookRef={refSauce} onModalClick={onModalClick}/>
                 <IngredientBlock type={"main"} lookRef={refMain} onModalClick={onModalClick}/>
             </div>
-            {
-                modal &&
-                <ModalBlock onModalClose={onModalClose}>
-                    <IngredientDetails />
-                </ModalBlock>
-            }
         </div>
     );
 };

@@ -9,6 +9,11 @@
     text-align: center;
 }
 
+.link {
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .ingredient_card {
     position: relative;
 }

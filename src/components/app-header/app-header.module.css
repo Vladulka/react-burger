@@ -38,6 +38,11 @@
     color: #ffffff;
 }
 
+.link_inactive {
+    text-decoration: none;
+    color: #8585AD;
+}
+
 .link:focus, .link:hover, .link:visited, .link:link, .link:active {
   text-decoration: none;
 }

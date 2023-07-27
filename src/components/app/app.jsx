@@ -1,37 +1,63 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor"
-import {useDispatch, useSelector} from "react-redux";
-import {getAllIngredients} from "../../services/actions/all-ingredients";
-import {ADD_BUN, ADD_INGREDIENT} from "../../services/actions/burger-constructor";
-import {DndProvider} from "react-dnd";
-import {HTML5Backend} from "react-dnd-html5-backend";
-import { v4 as uuidv4 } from 'uuid';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from "../../pages/login";
+import MainPage from "../../pages/main";
+import ProfilePage from "../../pages/profile/profile";
+import RegisterPage from "../../pages/register";
+import Page404 from "../../pages/page-404";
+import {ProtectedRouteElement} from "../protected-route-element/protected-route-element";
+import ForgotPasswordPage from "../../pages/forgot-password";
+import ResetPasswordPage from "../../pages/reset-password";
+import OrdersPage from "../../pages/profile/orders/orders";
+import {useLocation, useNavigate} from "react-router";
+import IngredientDetails from "../burger-ingredients/ingredient-details/ingredient-details";
+import ModalBlock from "../modal-block/modal-block";
+import {DEL_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
+import {useDispatch} from "react-redux";
 
 function App() {
 
+    const location = useLocation();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const background = location.state && location.state.background;
 
-    const onDropHandler = (item) => {
-        const key = uuidv4();
-        if (item.type === "bun") {
-            dispatch({ type: ADD_BUN, bun: {...item, itemID: key} })
-        } else {
-            dispatch({ type: ADD_INGREDIENT, item: {...item, itemID: key} })
-        }
+    const onModalClose = () => {
+        dispatch({ type: DEL_INGREDIENT_DETAIL });
+        navigate(-1);
     }
 
     return (
-        <DndProvider backend={HTML5Backend}>
+        <div>
             <AppHeader/>
             <main className={styles.main}>
-                <BurgerIngredients />
-                <BurgerConstructor onDropHandler={onDropHandler} />
+                <Routes location={background || location}>
+                    <Route path="*" element={<Page404 />}/>
+                    <Route path="/" element={<MainPage />}/>
+                    <Route path="/ingredients/:ingredientID" element={<IngredientDetails />}/>
+                    <Route path="/login" element={<ProtectedRouteElement element={<LoginPage />} protectedPage/>} />
+                    <Route path="/register" element={<ProtectedRouteElement element={<RegisterPage />} protectedPage/>} />
+                    <Route path="/forgot-password" element={<ForgotPasswordPage />} protectedPage />
+                    <Route path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />} protectedPage/>} />
+                    <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage />} />}/>
+                    <Route path="/profile/orders" element={<ProtectedRouteElement element={<OrdersPage />} />}/>
+                </Routes>
             </main>
-
-        </DndProvider>
+            {background && (
+                <Routes>
+                    <Route
+                        path="/ingredients/:ingredientID"
+                        element={
+                            <ModalBlock onModalClose={onModalClose}>
+                                <IngredientDetails />
+                            </ModalBlock>
+                        }
+                    />
+                </Routes>
+            )}
+        </div>
     );
 }
 

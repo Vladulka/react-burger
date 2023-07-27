@@ -1,0 +1,24 @@
+.form_block {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    margin: auto;
+    text-align: center;
+}
+
+.text_footer {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.link {
+    color: #4C4CFF;
+    text-decoration: none;
+ }

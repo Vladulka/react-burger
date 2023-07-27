@@ -5,7 +5,8 @@ import App from "./components/app/app";
 import {createStore, compose, applyMiddleware} from "redux";
 import {rootReducer} from "./services/reducers/root";
 import thunk from "redux-thunk";
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
+import {BrowserRouter as Router} from "react-router-dom";
 
 const composeEnhancers =
     typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -15,14 +16,16 @@ const composeEnhancers =
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root')
+    document.getElementById('root')
 );
 
 root.render(
-  <React.StrictMode>
-      <Provider store={store}>
-          <App />
-          <div id="react-modals" />
-      </Provider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <Router>
+            <Provider store={store}>
+                <App/>
+            </Provider>
+        </Router>
+        <div id="react-modals"/>
+    </React.StrictMode>
 );
