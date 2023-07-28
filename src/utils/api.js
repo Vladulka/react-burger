@@ -4,10 +4,10 @@ const API_URL = "https://norma.nomoreparties.space";
 
 export const getIngredientsData = () => {
     return fetch(`${API_URL}/api/ingredients`)
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) return data.data;
-            return Promise.reject(data);
+            return data.data
         });
 }
 
@@ -21,10 +21,10 @@ export const getOrderDetailsData = (ingredients) => {
             "ingredients": ingredients
         })
     })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) return data;
-            return Promise.reject(data);
+            return data;
         });
 }
 
@@ -40,18 +40,13 @@ export const authUser = ({email, password}) => {
                 "password": password
             })
         })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                setCookie('accessToken', data?.accessToken);
-                localStorage.setItem('refreshToken', data?.refreshToken);
-                return data.data;
-            }
-            return Promise.reject(data);
+            setCookie('accessToken', data?.accessToken);
+            localStorage.setItem('refreshToken', data?.refreshToken);
+            return data.data;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const forgotPassword = (email) => {
@@ -65,16 +60,11 @@ export const forgotPassword = (email) => {
                 "email": email,
             })
         })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                return data.data;
-            }
-            return Promise.reject(data);
+            return data.data;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const resetPassword = ({password, code}) => {
@@ -89,16 +79,11 @@ export const resetPassword = ({password, code}) => {
                 "token": code
             })
         })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                return data.message;
-            }
-            return Promise.reject(data);
+            return data.message;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const registerUser = ({name, email, password}) => {
@@ -114,18 +99,13 @@ export const registerUser = ({name, email, password}) => {
                 "password": password
             })
         })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                setCookie('accessToken', data?.accessToken);
-                localStorage.setItem('refreshToken', data?.refreshToken);
-                return data;
-            }
-            return Promise.reject(data);
+            setCookie('accessToken', data?.accessToken);
+            localStorage.setItem('refreshToken', data?.refreshToken);
+            return data;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const logoutUser = () => {
@@ -139,17 +119,12 @@ export const logoutUser = () => {
                 "token": localStorage.getItem('refreshToken'),
             })
         })
-        .then(response => response.ok ? response.json() : response.json().then((err) => Promise.reject(err)))
+        .then(checkResponse)
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                setCookie('accessToken', data?.accessToken);
-                return data;
-            }
-            return Promise.reject(data);
+            setCookie('accessToken', data?.accessToken);
+            return data;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const getUserData = () => {
@@ -161,15 +136,10 @@ export const getUserData = () => {
                 authorization: getCookie('accessToken'),
             },
         })
+        .then(checkSuccess)
         .then((data) => {
-            if (data?.success) {
-                return data?.user;
-            }
-            return Promise.reject(data);
+            return data?.user;
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const updateUserData = ({name, email, password}) => {
@@ -192,9 +162,6 @@ export const updateUserData = ({name, email, password}) => {
             }
             return Promise.reject(data);
         })
-        .catch(e => {
-            alert(e.message);
-        });
 }
 
 export const fetchWithRefresh = async (url, options) => {
@@ -221,6 +188,14 @@ export const checkResponse = (response) => {
     return response.ok
         ? response.json()
         : response.json().then((error) => Promise.reject(error));
+};
+
+export const checkSuccess = (res) => {
+    if (res && res.success) {
+        return res;
+    }
+
+    return Promise.reject(`Ответ не success: ${res}`);
 };
 
 export const refreshToken = () => {

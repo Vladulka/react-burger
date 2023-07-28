@@ -22,10 +22,13 @@ const RegisterForm = () => {
         getRegister(value)(dispatch).then(() => {
             navigate('/');
         })
+        .catch(e => {
+            alert(e.message);
+        });
     }
 
     return (
-        <div className={styles.form_block}>
+        <div className={styles.form_block} onSubmit={onRegisterClick}>
             <form className={styles.form}>
                 <p className="text text_type_main-medium mb-6">
                     Регистрация
@@ -52,7 +55,7 @@ const RegisterForm = () => {
                     isIcon={true}
                     extraClass={"mb-6"}
                 />
-                <Button htmlType="button" type="primary" size="medium" extraClass={"mb-20"} onClick={onRegisterClick}>
+                <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>
                     Зарегистрироваться
                 </Button>
                 <span className={styles.text_footer}>

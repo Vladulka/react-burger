@@ -26,6 +26,5 @@ root.render(
                 <App/>
             </Provider>
         </Router>
-        <div id="react-modals"/>
     </React.StrictMode>
 );

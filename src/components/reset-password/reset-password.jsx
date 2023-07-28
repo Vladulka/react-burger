@@ -25,10 +25,13 @@ const ResetPassword = () => {
             alert(data);
             navigate('/login')
         })
+        .catch(e => {
+            alert(e.message);
+        });
     }
 
     return (
-        <div className={styles.form_block}>
+        <div className={styles.form_block} onSubmit={onBtnClick}>
             <form className={styles.form}>
                 <p className="text text_type_main-medium mb-6">
                     Восстановление пароля
@@ -49,7 +52,7 @@ const ResetPassword = () => {
                     isIcon={false}
                     extraClass={"mb-6"}
                 />
-                <Button htmlType="button" type="primary" size="medium" extraClass={"mb-20"} onClick={onBtnClick}>
+                <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>
                     Сохранить
                 </Button>
                 <span className={styles.text_footer}>

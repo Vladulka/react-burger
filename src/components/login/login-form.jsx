@@ -8,7 +8,6 @@ import {getAuth} from "../../services/actions/authorization";
 
 const LoginForm = () => {
 
-    const {authData} = useSelector(store => store.authData)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -22,11 +21,14 @@ const LoginForm = () => {
         getAuth(value)(dispatch).then(() => {
             navigate('/')
         })
+        .catch(e => {
+            alert(e.message);
+        });
     }
 
     return (
         <div className={styles.form_block}>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={onLoginClick}>
                 <p className="text text_type_main-medium mb-6">
                     Вход
                 </p>
@@ -44,7 +46,7 @@ const LoginForm = () => {
                     isIcon={true}
                     extraClass={"mb-6"}
                 />
-                <Button htmlType="button" type="primary" size="medium" extraClass={"mb-20"} onClick={onLoginClick}>
+                <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>
                     Войти
                 </Button>
                 <span className={styles.text_footer}>

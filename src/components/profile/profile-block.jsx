@@ -24,6 +24,9 @@ const ProfileBlock = () => {
         getUserInfo()(dispatch).then((data) => {
             setValue({...value, email: data.email, name: data.name})
         })
+            .catch(e => {
+                alert(e.message);
+            });
     }, [])
 
     const onExitClick = () => {
@@ -32,6 +35,9 @@ const ProfileBlock = () => {
             localStorage.removeItem('refreshToken');
             navigate('/login');
         })
+            .catch(e => {
+                alert(e.message);
+            });
     }
 
     const resetForm = () => {
@@ -49,7 +55,10 @@ const ProfileBlock = () => {
                 data: data
             });
             alert("Данные успешно обновлены!")
-        });
+        })
+            .catch(e => {
+                alert(e.message);
+            });
     }
 
     useEffect(() => {
@@ -71,52 +80,53 @@ const ProfileBlock = () => {
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
             </div>
-            <div className={styles.item}>
-                <Input
-                    value={value.name}
-                    name={'name'}
-                    placeholder="Имя"
-                    onChange={e => setValue({...value, name: e.target.value})}
-                    extraClass="mb-2"
-                />
-                <EmailInput
-                    value={value.email}
-                    name={'email'}
-                    placeholder="E-mail"
-                    isIcon={true}
-                    onChange={e => setValue({...value, email: e.target.value})}
-                    extraClass="mb-2"
-                />
-                <PasswordInput
-                    onChange={e => setValue({...value, password: e.target.value})}
-                    value={value.password}
-                    name="password"
-                    placeholder="Пароль"
-                    icon="EditIcon"
-                    extraClass="mb-6"
-                />
-                {(value.name !== user.name ||
-                    value.email !== user.email || value.password.length > 0) && (
-                    <div className={"mt-5"}>
-                        <Button
-                            htmlType="button"
-                            type="secondary"
-                            size="medium"
-                            extraClass={"mr-5"}
-                            onClick={resetForm}
-                        >
-                            Отмена
-                        </Button>
-                        <Button
-                            htmlType="button"
-                            type="primary"
-                            size="medium"
-                            onClick={updateBtnClick}
-                        >
-                            Сохранить
-                        </Button>
-                    </div>
-                )}
+            <div className={styles.item} onSubmit={updateBtnClick}>
+                <form>
+                    <Input
+                        value={value.name}
+                        name={'name'}
+                        placeholder="Имя"
+                        onChange={e => setValue({...value, name: e.target.value})}
+                        extraClass="mb-2"
+                    />
+                    <EmailInput
+                        value={value.email}
+                        name={'email'}
+                        placeholder="E-mail"
+                        isIcon={true}
+                        onChange={e => setValue({...value, email: e.target.value})}
+                        extraClass="mb-2"
+                    />
+                    <PasswordInput
+                        onChange={e => setValue({...value, password: e.target.value})}
+                        value={value.password}
+                        name="password"
+                        placeholder="Пароль"
+                        icon="EditIcon"
+                        extraClass="mb-6"
+                    />
+                    {(value.name !== user.name ||
+                        value.email !== user.email || value.password.length > 0) && (
+                        <div className={"mt-5"}>
+                            <Button
+                                htmlType="button"
+                                type="secondary"
+                                size="medium"
+                                extraClass={"mr-5"}
+                                onClick={resetForm}
+                            >
+                                Отмена
+                            </Button>
+                            <Button
+                                htmlType="submit"
+                                type="primary"
+                                size="medium"
+                            >
+                                Сохранить
+                            </Button>
+                        </div>
+                    )}
+                </form>
             </div>
         </div>
     );
