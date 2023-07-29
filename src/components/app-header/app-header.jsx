@@ -21,7 +21,6 @@ const AppHeader = () => {
                             isActive ? active : inactive
                         }
                     >
-                        {/*<Link to='/' className={style.link}>*/}
                         <li className={`${style.header_li} p-5`}>
                             <BurgerIcon type={ homePage ? "primary" : "secondary"} />
                             <p className="text text_type_main-default ml-2">
@@ -38,7 +37,11 @@ const AppHeader = () => {
                         </li>
                     </a>
                 </ul>
-                <div className={style.header_item}><Logo/></div>
+                <div className={style.header_item}>
+                    <Link to={'/'}>
+                        <Logo/>
+                    </Link>
+                </div>
                 <div className={`${style.header_item} p-5`}>
                     <NavLink
                         to='/profile'

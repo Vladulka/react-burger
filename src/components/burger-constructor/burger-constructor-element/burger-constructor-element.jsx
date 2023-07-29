@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {DEL_INGREDIENT, SORT_INGREDIENTS} from "../../../services/actions/burger-constructor";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
+import {ingredientPropType} from "../../../utils/type";
 
 const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false, elementType = "main", index}) => {
 
@@ -76,11 +77,7 @@ const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false,
 };
 
 BurgerConstructorElement.propTypes = {
-    name: PropTypes.string.isRequired,
-    elementType: PropTypes.string,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    isLocked: PropTypes.bool,
+    ingredientPropType
 }
 
 export default BurgerConstructorElement;

@@ -20,6 +20,9 @@ export function getAuth({email, password}) {
                     type: GET_AUTH_FAILED
                 });
             }
+        })
+        .catch((e) => {
+            console.log(e)
         });
     };
 }

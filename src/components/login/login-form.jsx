@@ -5,11 +5,13 @@ import {Link, useNavigate} from "react-router-dom";
 import {authUser} from "../../utils/api";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth} from "../../services/actions/authorization";
+import {useLocation} from "react-router";
 
 const LoginForm = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [value, setValue] = React.useState({
         email: '',
@@ -19,7 +21,10 @@ const LoginForm = () => {
     const onLoginClick = (e) => {
         e.preventDefault();
         getAuth(value)(dispatch).then(() => {
-            navigate('/')
+            const redirectTo = location?.state?.redirectTo?.pathname
+                ? location.state.redirectTo.pathname
+                : '/';
+            navigate(redirectTo);
         })
         .catch(e => {
             alert(e.message);
@@ -36,14 +41,12 @@ const LoginForm = () => {
                     onChange={e => setValue({...value, email: e.target.value})}
                     value={value.email}
                     name={'email'}
-                    isIcon={false}
                     extraClass={"mb-6"}
                 />
                 <PasswordInput
                     onChange={e => setValue({...value, password: e.target.value})}
                     value={value.password}
                     name={'password'}
-                    isIcon={true}
                     extraClass={"mb-6"}
                 />
                 <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>

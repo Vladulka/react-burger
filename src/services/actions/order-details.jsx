@@ -24,6 +24,9 @@ export function getOrderDetails(ingredients) {
                     type: GET_ORDER_FAILED
                 });
             }
+        })
+        .catch((e) => {
+            console.log(e)
         });
     };
 }

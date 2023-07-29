@@ -20,7 +20,7 @@ import {useDrop} from "react-dnd";
     return (
         <div className={"mt-25"} ref={dropRef}>
             <div className={style.burger_list_locked}>
-                {bun._id && <BurgerConstructorElement elementType={'top'} isLocked {...bun} />}
+                {bun._id && <BurgerConstructorElement elementType={'top'} isLocked {...bun} name={bun.name + ' (верх)'}/>}
             </div>
             <div className={style.burger_list}>
                 {
@@ -30,7 +30,7 @@ import {useDrop} from "react-dnd";
                 }
             </div>
             <div className={style.burger_list_locked}>
-                {bun._id && <BurgerConstructorElement elementType={'bottom'} isLocked {...bun} />}
+                {bun._id && <BurgerConstructorElement elementType={'bottom'} isLocked {...bun} name={bun.name + ' (низ)'} />}
             </div>
             <BurgerConstructorFooter />
         </div>

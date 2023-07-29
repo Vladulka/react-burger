@@ -3,9 +3,7 @@ import ProfileBlock from "../../components/profile/profile-block";
 
 const ProfilePage = () => {
     return (
-        <>
-            <ProfileBlock />
-        </>
+        <ProfileBlock />
     );
 };
 

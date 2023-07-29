@@ -23,7 +23,7 @@ const IngredientBlock = ({type, onModalClick, lookRef}) => {
             </p>
             <div className={`${style.ingredients} pl-4 pr-4`} >
                 {
-                    !ingredientsRequest && ingredients.map((ingredient, index) => <IngredientCard key={index} onModalClick={onModalClick} data={ingredient}/>)
+                    !ingredientsRequest && ingredients.map((ingredient) => <IngredientCard key={ingredient._id} onModalClick={onModalClick} data={ingredient}/>)
                 }
             </div>
         </div>

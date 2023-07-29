@@ -2,10 +2,19 @@ import React from 'react';
 import style from './ingredient-details.module.css'
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {ingredientPropType} from "../../../utils/type";
 
 const IngredientDetails = () => {
 
-    const ingredient = useSelector(store => store.ingredientDetails.currentIngredient);
+    const {ingredientID} = useParams();
+
+    const ingredients = useSelector(store => store.allIngredients.allIngredients);
+    const ingredient = ingredients.find(ingredient => ingredient._id === ingredientID);
+
+    if (!ingredient || !ingredientID) {
+        return (<></>);
+    }
 
     return (
         <div className={style.details}>
@@ -59,14 +68,7 @@ const IngredientDetails = () => {
 };
 
 IngredientDetails.propTypes = {
-    ingredient: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        calories: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-    })
+    ingredient: ingredientPropType
 }
 
 export default IngredientDetails;

@@ -16,7 +16,7 @@ const ForgotPassword = () => {
     const onBtnClick = (e) => {
         e.preventDefault();
         forgotPassword(email).then(() => {
-            setCookie('reset-email', email, 10);
+            localStorage.setItem('reset-email', email);
             navigate('/reset-password');
         })
         .catch(e => {

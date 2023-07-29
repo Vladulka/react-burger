@@ -20,6 +20,9 @@ export function getAllIngredients() {
                     type: GET_ALL_INGREDIENTS_FAILED
                 });
             }
+        })
+        .catch((e) => {
+            console.log(e)
         });
     };
 }

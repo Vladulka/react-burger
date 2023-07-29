@@ -21,6 +21,9 @@ export function getUserInfo() {
                     type: GET_USER_FAILED
                 });
             }
+        })
+        .catch((e) => {
+            console.log(e)
         });
     };
 }

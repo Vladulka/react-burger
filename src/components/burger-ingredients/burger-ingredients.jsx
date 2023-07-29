@@ -14,16 +14,7 @@ export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
 
-    const navigate = useNavigate();
-
     const dispatch = useDispatch();
-
-    useEffect(
-        () => {
-            dispatch(getAllIngredients());
-        },
-        [dispatch]
-    );
 
     const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0 });
     const { ref: refSauce, inView: inViewSauce } = useInView({ threshold: 0});

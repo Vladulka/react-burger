@@ -20,6 +20,9 @@ export function getRegister({name, email, password}) {
                     type: GET_REGISTER_FAILED
                 });
             }
+        })
+        .catch((e) => {
+            console.log(e)
         });
     };
 }

@@ -1,19 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
 import styles from "./reset-password.module.css";
-import {getCookie} from "../../utils/cookie";
+import {getCookie, setCookie} from "../../utils/cookie";
 import {useNavigate} from "react-router";
 import {resetPassword} from "../../utils/api";
+import {useSelector} from "react-redux";
 
 const ResetPassword = () => {
 
     const navigate = useNavigate();
 
-    if(!getCookie('reset-email')) {
-        console.log("error")
-        navigate('/forgot-password');
-    }
+    const reset = localStorage.getItem('reset-email');
+
+    useEffect(() => {
+        if (getCookie('accessToken') && localStorage.getItem('refreshToken')) navigate('/');
+        if(!reset) navigate('/forgot-password');
+        if (reset) localStorage.removeItem('reset-email')
+
+    }, [])
 
     const [value, setValue] = React.useState({
         code: '',
@@ -41,7 +46,6 @@ const ResetPassword = () => {
                     onChange={e => setValue({...value, password: e.target.value})}
                     value={value.password}
                     name={'name'}
-                    isIcon={true}
                     extraClass={"mb-6"}
                 />
                 <Input
@@ -49,7 +53,6 @@ const ResetPassword = () => {
                     onChange={e => setValue({...value, code: e.target.value})}
                     value={value.code}
                     name={'code'}
-                    isIcon={false}
                     extraClass={"mb-6"}
                 />
                 <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>

@@ -3,9 +3,7 @@ import ResetPassword from "../components/reset-password/reset-password";
 
 const ResetPasswordPage = () => {
     return (
-        <>
-            <ResetPassword />
-        </>
+        <ResetPassword />
     );
 };
 

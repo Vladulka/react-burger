@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
+import {ingredientPropType} from "../../../utils/type";
 
 const IngredientCard = ({onModalClick, data}) => {
 
@@ -52,12 +53,7 @@ const IngredientCard = ({onModalClick, data}) => {
 };
 
 IngredientCard.propTypes = {
-    data: PropTypes.objectOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        count: PropTypes.number,
-    })),
+    data: ingredientPropType,
     onModalClick: PropTypes.func.isRequired
 }
 

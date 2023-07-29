@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -16,6 +16,7 @@ import IngredientDetails from "../burger-ingredients/ingredient-details/ingredie
 import ModalBlock from "../modal-block/modal-block";
 import {DEL_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
 import {useDispatch} from "react-redux";
+import {getAllIngredients} from "../../services/actions/all-ingredients";
 
 function App() {
 
@@ -23,6 +24,13 @@ function App() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const background = location.state && location.state.background;
+
+    useEffect(
+        () => {
+            dispatch(getAllIngredients());
+        },
+        [dispatch]
+    );
 
     const onModalClose = () => {
         dispatch({ type: DEL_INGREDIENT_DETAIL });

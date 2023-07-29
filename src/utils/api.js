@@ -184,6 +184,12 @@ export const fetchWithRefresh = async (url, options) => {
     }
 };
 
+const request = (endpoint, options) => {
+    return fetch(`${API_URL}${endpoint}`, options)
+        .then(checkResponse)
+        .then(checkSuccess);
+};
+
 export const checkResponse = (response) => {
     return response.ok
         ? response.json()
@@ -199,7 +205,6 @@ export const checkSuccess = (res) => {
 };
 
 export const refreshToken = () => {
-    console.log(localStorage.getItem('refreshToken'))
     return fetch(`${API_URL}/api/auth/token`, {
         method: 'POST',
         headers: {
