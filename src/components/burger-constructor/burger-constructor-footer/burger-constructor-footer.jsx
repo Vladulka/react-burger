@@ -5,6 +5,8 @@ import OrderDetails from "../order-details/order-details";
 import ModalBlock from "../../modal-block/modal-block";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../../services/actions/order-details";
+import {getCookie} from "../../../utils/cookie";
+import {useNavigate} from "react-router";
 
 const initialState =  { count: 0 };
 
@@ -23,6 +25,7 @@ function reducer(state, action) {
 
 const BurgerConstructorFooter = () => {
 
+    const navigate = useNavigate();
     const dispatchRedux = useDispatch();
 
     const {items, bun} = useSelector(store => store.burgerConstructor);
@@ -39,11 +42,17 @@ const BurgerConstructorFooter = () => {
     }, [bun, items]);
 
     const onModalClick = () => {
-        if (bun._id) {
-            dispatchRedux(getOrderDetails(...items.map(({ _id }) => _id), bun.itemID, bun.itemID));
-            setModal(true);
-        } else {
-            alert("Выберите булку!")
+        if (!bun._id) {
+            alert("Выберите булку!");
+        } else if(items.length === 0) {
+            alert("Добавьте ингредиенты!");
+        } else  {
+            if(getCookie('accessToken') && localStorage.getItem('refreshToken')) {
+                dispatchRedux(getOrderDetails(...items.map(({ _id }) => _id), bun.itemID, bun.itemID));
+                setModal(true);
+            } else {
+                navigate('/login');
+            }
         }
     }
 
