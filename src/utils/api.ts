@@ -1,11 +1,18 @@
 import {getCookie, setCookie} from "./cookie";
-import { TAuthUser, IIngredient, TResetPassword } from "../types";
+import {
+    TAuthUser,
+    IIngredient,
+    TResetPassword,
+    TIngredientsResponse,
+    TAuthResponse,
+    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse
+} from "../types";
 
 const API_URL = "https://norma.nomoreparties.space";
 
 export const getIngredientsData = () => {
     return fetch(`${API_URL}/api/ingredients`)
-        .then(checkResponse)
+        .then(checkResponse<TIngredientsResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.data
@@ -22,7 +29,7 @@ export const getOrderDetailsData = (ingredients: IIngredient[]) => {
             "ingredients": ingredients
         })
     })
-        .then(checkResponse)
+        .then(checkResponse<TOrderDetailsResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data;
@@ -41,7 +48,7 @@ export const authUser = ({email, password}: TAuthUser) => {
                 "password": password
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TAuthResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -100,7 +107,7 @@ export const registerUser = ({name, email, password}: TAuthUser) => {
                 "password": password
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TAuthResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -120,7 +127,7 @@ export const logoutUser = () => {
                 "token": localStorage.getItem('refreshToken'),
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TLogoutResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -129,7 +136,7 @@ export const logoutUser = () => {
 }
 
 export const getUserData = () => {
-    return fetchWithRefresh(`${API_URL}/api/auth/user`,
+    return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "GET",
             headers: {
@@ -144,7 +151,7 @@ export const getUserData = () => {
 }
 
 export const updateUserData = ({name, email, password}: TAuthUser) => {
-    return fetchWithRefresh(`${API_URL}/api/auth/user`,
+    return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "PATCH",
             headers: {
@@ -165,10 +172,10 @@ export const updateUserData = ({name, email, password}: TAuthUser) => {
         })
 }
 
-export const fetchWithRefresh = async (url: string, options: any) => {
+export const fetchWithRefresh = async <T>(url: string, options: any) => {
     try {
         const res = await fetch(url, options);
-        return await checkResponse(res);
+        return await checkResponse<T>(res);
     } catch (err: any) {
         if (err.message === 'jwt expired') {
             const refreshData = await refreshToken();
@@ -179,23 +186,20 @@ export const fetchWithRefresh = async (url: string, options: any) => {
             setCookie('accessToken', refreshData.accessToken);
             options.headers.authorization = refreshData.accessToken;
             const res = await fetch(url, options);
-            return checkResponse(res);
+            return checkResponse<T>(res);
         }
         return Promise.reject(err);
     }
 };
 
-export const checkResponse = (response: Response) => {
-    return response.ok
-        ? response.json()
-        : response.json().then((error) => Promise.reject(error));
+const checkResponse = <T>(res: Response): Promise<T> => {
+    return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
 };
 
 export const checkSuccess = (res: any) => {
     if (res && res.success) {
         return res;
     }
-
     return Promise.reject(`Ответ не success: ${res}`);
 };
 
@@ -208,5 +212,5 @@ export const refreshToken = () => {
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken'),
         }),
-    }).then(checkResponse);
+    }).then(checkResponse<TRefreshResponse>);
 };

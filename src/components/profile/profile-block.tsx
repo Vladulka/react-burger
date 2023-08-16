@@ -20,6 +20,7 @@ const ProfileBlock = () => {
         password: '',
     })
 
+    /* eslint-disable */
     useEffect(() => {
         getUserInfo()(dispatch).then((data) => {
             setValue({...value, email: data.email, name: data.name})
@@ -28,6 +29,7 @@ const ProfileBlock = () => {
                 alert(e.message);
             });
     }, [])
+    /* eslint-enable */
 
     const onExitClick = () => {
         logoutUser().then(() => {
@@ -35,9 +37,9 @@ const ProfileBlock = () => {
             localStorage.removeItem('refreshToken');
             navigate('/login');
         })
-            .catch(e => {
-                alert(e.message);
-            });
+        .catch(e => {
+            alert(e.message);
+        });
     }
 
     const resetForm = () => {
@@ -80,8 +82,8 @@ const ProfileBlock = () => {
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
             </div>
-            <div className={styles.item} onSubmit={updateBtnClick}>
-                <form>
+            <div className={styles.item}>
+                <form onSubmit={updateBtnClick}>
                     <Input
                         value={value.name}
                         name={'name'}

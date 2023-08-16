@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import style from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { IModal } from "../../../types";
 
 const Modal = ({children, onModalClose}: IModal) => {
@@ -31,10 +30,5 @@ const Modal = ({children, onModalClose}: IModal) => {
     );
 
 };
-
-Modal.propTypes = {
-    children: PropTypes.object,
-    onModalClick: PropTypes.func
-}
 
 export default Modal;

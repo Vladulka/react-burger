@@ -2,7 +2,13 @@ import React, {useMemo} from 'react';
 import style from "./ingredient-block.module.css";
 import IngredientCard from "../ingredient-card/ingredient-card";
 import {useSelector} from "react-redux";
-import { IIngredient, IIngredientBlock } from "../../../types";
+import { IIngredient } from "../../../types";
+
+export interface IIngredientBlock {
+    type: string,
+    onModalClick: (data: IIngredient) => void,
+    lookRef: (node?: Element | null | undefined) => void
+}
 
 const IngredientBlock = ({type, onModalClick, lookRef}: IIngredientBlock) => {
 

@@ -17,7 +17,7 @@ const LoginForm = () => {
         password: ''
     })
 
-    const onLoginClick = (e: React.MouseEvent<HTMLElement>) => {
+    const onLoginClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         getAuth(value)(dispatch).then(() => {
             const redirectTo = location?.state?.redirectTo?.pathname
@@ -32,7 +32,7 @@ const LoginForm = () => {
 
     return (
         <div className={styles.form_block}>
-            <form className={styles.form} onSubmit={() => onLoginClick}>
+            <form className={styles.form} onSubmit={onLoginClick}>
                 <p className="text text_type_main-medium mb-6">
                     Вход
                 </p>

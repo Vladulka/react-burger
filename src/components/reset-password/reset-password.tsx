@@ -12,12 +12,14 @@ const ResetPassword = () => {
 
     const reset = localStorage.getItem('reset-email');
 
+    /* eslint-disable */
     useEffect(() => {
         if (getCookie('accessToken') && localStorage.getItem('refreshToken')) navigate('/');
         if(!reset) navigate('/forgot-password');
         if (reset) localStorage.removeItem('reset-email')
 
     }, [])
+    /* eslint-enable */
 
     const [value, setValue] = React.useState({
         code: '',
@@ -35,8 +37,8 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={onBtnClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onBtnClick}>
                 <p className="text text_type_main-medium mb-6">
                     Восстановление пароля
                 </p>

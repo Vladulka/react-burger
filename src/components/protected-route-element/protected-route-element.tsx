@@ -8,7 +8,7 @@ interface IProtectedRoute {
 	protectedPage: boolean
 }
 
-export const ProtectedRouteElement = ({ element, protectedPage }: IProtectedRoute): any => {
+export const ProtectedRouteElement = ({ element, protectedPage }: IProtectedRoute) => {
 	const location = useLocation();
 
 	const token = getCookie('accessToken') || localStorage.getItem('refreshToken')

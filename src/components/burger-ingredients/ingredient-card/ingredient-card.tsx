@@ -5,7 +5,12 @@ import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
-import { IIngredient, IIngredientCard } from "../../../types";
+import { IIngredient } from "../../../types";
+
+export interface IIngredientCard {
+    onModalClick: (data: IIngredient) => void,
+    data: IIngredient
+}
 
 const IngredientCard = ({onModalClick, data}: IIngredientCard) => {
 

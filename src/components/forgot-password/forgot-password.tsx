@@ -11,7 +11,7 @@ const ForgotPassword = () => {
 
     const navigate = useNavigate();
 
-    const onBtnClick = (e: React.MouseEvent<HTMLElement>) => {
+    const onBtnClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         forgotPassword(email).then(() => {
             localStorage.setItem('reset-email', email);
@@ -23,8 +23,8 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={() => onBtnClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onBtnClick}>
                 <p className="text text_type_main-medium mb-6">
                     Восстановление пароля
                 </p>

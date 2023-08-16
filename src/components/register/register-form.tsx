@@ -17,7 +17,7 @@ const RegisterForm = () => {
         password: ''
     })
 
-    const onRegisterClick = (e: React.MouseEvent<HTMLElement>) => {
+    const onRegisterClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         getRegister(value)(dispatch).then(() => {
             navigate('/');
@@ -28,8 +28,8 @@ const RegisterForm = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={() => onRegisterClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onRegisterClick}>
                 <p className="text text_type_main-medium mb-6">
                     Регистрация
                 </p>
