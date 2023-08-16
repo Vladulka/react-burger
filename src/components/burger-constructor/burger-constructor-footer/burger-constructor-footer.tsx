@@ -10,7 +10,7 @@ import {useNavigate} from "react-router";
 
 const initialState =  { count: 0 };
 
-function reducer(state, action) {
+function reducer(state: any, action: any) {
     switch (action.type) {
         case "increment":
             return { count: state.count + action.price };
@@ -26,17 +26,17 @@ function reducer(state, action) {
 const BurgerConstructorFooter = () => {
 
     const navigate = useNavigate();
-    const dispatchRedux = useDispatch();
+    const dispatchRedux: any = useDispatch();
 
-    const {items, bun} = useSelector(store => store.burgerConstructor);
-    const {order, orderRequest} = useSelector(store => store.orderDetails);
+    const {items, bun} = useSelector((store: any) => store.burgerConstructor);
+    const {order, orderRequest} = useSelector((store: any) => store.orderDetails);
 
     const [modal, setModal] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         dispatch({type: "drop"})
-        const total = items.reduce((sum, a) => sum + a.price, 0);
+        const total = items.reduce((sum: number, a: { price: number }) => sum + a.price, 0);
         dispatch({type: "buns", price: bun.price})
         dispatch({type: "increment", price: total})
     }, [bun, items]);
@@ -48,7 +48,7 @@ const BurgerConstructorFooter = () => {
             alert("Добавьте ингредиенты!");
         } else  {
             if(getCookie('accessToken') && localStorage.getItem('refreshToken')) {
-                dispatchRedux(getOrderDetails(...items.map(({ _id }) => _id), bun.itemID, bun.itemID));
+                dispatchRedux(getOrderDetails(...items.map(({ _id }: { _id: number }) => _id), bun.itemID, bun.itemID));
                 setModal(true);
             } else {
                 navigate('/login');

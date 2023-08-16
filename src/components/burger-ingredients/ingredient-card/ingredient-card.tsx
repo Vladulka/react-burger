@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-card.module.css";
-import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
-import {ingredientPropType} from "../../../utils/type";
+import { IIngredient, IIngredientCard } from "../../../types";
 
-const IngredientCard = ({onModalClick, data}) => {
+const IngredientCard = ({onModalClick, data}: IIngredientCard) => {
 
     const location = useLocation();
     const [totalCount, setTotalCount] = useState(0);
-    const { items, bun } = useSelector(state => state.burgerConstructor);
+    const { items, bun } = useSelector((state: any) => state.burgerConstructor);
 
     useEffect(() => {
         if (bun._id === data._id) {
             setTotalCount(1)
         } else {
-            setTotalCount(items.filter(ingredient => ingredient._id === data._id).length);
+            setTotalCount(items.filter((ingredient:IIngredient) => ingredient._id === data._id).length);
         }
     }, [items, bun, data._id]);
 
@@ -31,7 +30,7 @@ const IngredientCard = ({onModalClick, data}) => {
     });
 
     return (
-        <div ref={dragRef} className={style.ingredient_card} onClick={onModalClick(data)}>
+        <div ref={dragRef} className={style.ingredient_card} onClick={() => onModalClick(data)}>
             <Link
                 to={{ pathname: `/ingredients/${data._id}` }}
                 state={{ background: location }}
@@ -51,11 +50,5 @@ const IngredientCard = ({onModalClick, data}) => {
     );
 
 };
-
-IngredientCard.propTypes = {
-    data: ingredientPropType,
-    onModalClick: PropTypes.func.isRequired
-}
-
 
 export default IngredientCard;

@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import styles from "./reset-password.module.css";
-import {getCookie, setCookie} from "../../utils/cookie";
-import {useNavigate} from "react-router";
-import {resetPassword} from "../../utils/api";
-import {useSelector} from "react-redux";
+import { getCookie } from "../../utils/cookie";
+import { useNavigate } from "react-router";
+import { resetPassword } from "../../utils/api";
 
 const ResetPassword = () => {
 

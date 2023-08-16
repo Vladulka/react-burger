@@ -1,34 +1,36 @@
 import React, {useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
 import {DEL_INGREDIENT, SORT_INGREDIENTS} from "../../../services/actions/burger-constructor";
 import {useDispatch} from "react-redux";
-import {useDrag, useDrop} from "react-dnd";
-import {ingredientPropType} from "../../../utils/type";
+import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
+import { IDropItem, IIngredient } from "../../../types";
 
-const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false, elementType = "main", index}) => {
+const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false, elementType = undefined, index}: IIngredient) => {
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLInputElement>(null);
     const dispatch = useDispatch();
 
-    const [, dropSort] = useDrop({
+    const [, dropSort] = useDrop<IDropItem, unknown, unknown>
+    ({
         accept: 'ingredientSort',
-        hover(item, monitor) {
+        hover(item: IDropItem, monitor: DropTargetMonitor) {
             const dragIndex = item.index;
             const hoverIndex = index;
 
-            if (!ref.current) { return }
-            if (item.index === index) { return }
 
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            if (!ref.current) { return }
+            if (dragIndex === hoverIndex) { return }
+
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-            const clientOffset = monitor.getClientOffset()
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+            const clientOffset: XYCoord | null = monitor.getClientOffset() || { x: 0, y: 0 };
+            const hoverClientY = clientOffset && clientOffset.y - hoverBoundingRect.top;
+
+            if ((dragIndex && hoverIndex) && (dragIndex < hoverIndex && hoverClientY < hoverMiddleY)) {
                 return
             }
 
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+            if ((dragIndex && hoverIndex) && (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)) {
                 return
             }
             dispatch({
@@ -55,7 +57,7 @@ const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false,
     const opacity = isDragging ? 0 : 1;
     dragSort(dropSort(ref));
 
-    const handleClose = (e) => {
+    const handleClose = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         dispatch({ type: DEL_INGREDIENT, id: itemID })
     }
@@ -70,14 +72,10 @@ const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false,
                 price={price}
                 thumbnail={image}
                 extraClass={"ml-2 mb-4"}
-                handleClose={(e) => handleClose(e)}
+                handleClose={() => handleClose}
             />
         </div>
     );
 };
-
-BurgerConstructorElement.propTypes = {
-    ingredientPropType
-}
 
 export default BurgerConstructorElement;

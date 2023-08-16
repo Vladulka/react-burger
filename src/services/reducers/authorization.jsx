@@ -1,5 +1,4 @@
 import {GET_AUTH_FAILED, GET_AUTH_REQUEST, GET_AUTH_SUCCESS} from "../actions/authorization";
-import {GET_ORDER_FAILED} from "../actions/order-details";
 
 const initialData = {
     authData: {

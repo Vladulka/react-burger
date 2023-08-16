@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styles from './profile-block.module.css'
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
-import {GET_USER_SUCCESS, getUserInfo} from "../../services/actions/user";
-import {useNavigate} from "react-router";
-import {logoutUser, updateUserData} from "../../utils/api";
-import {setCookie} from "../../utils/cookie";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_USER_SUCCESS, getUserInfo } from "../../services/actions/user";
+import { useNavigate } from "react-router";
+import { logoutUser, updateUserData } from "../../utils/api";
+import { setCookie } from "../../utils/cookie";
 
 const ProfileBlock = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const {user} = useSelector(store => store.userData);
+    const {user} = useSelector((store: any) => store.userData) || {} || undefined;
 
     const [value, setValue] = React.useState({
         name: '',

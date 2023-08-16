@@ -1,4 +1,8 @@
-import {GET_ALL_INGREDIENTS_FAILED, GET_ALL_INGREDIENTS_REQUEST, GET_ALL_INGREDIENTS_SUCCESS} from "../actions/all-ingredients";
+import {
+    GET_ALL_INGREDIENTS_FAILED,
+    GET_ALL_INGREDIENTS_REQUEST,
+    GET_ALL_INGREDIENTS_SUCCESS
+} from "../actions/all-ingredients";
 
 const initialData = {
     allIngredients: [],

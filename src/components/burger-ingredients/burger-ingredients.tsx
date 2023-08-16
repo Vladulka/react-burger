@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, { useEffect } from 'react';
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
-import ModalBlock from "../modal-block/modal-block";
 import { useInView } from 'react-intersection-observer';
-import {useDispatch} from "react-redux";
-import {GET_INGREDIENT_DETAIL} from "../../services/actions/ingredient-details";
-import IngredientDetails from "./ingredient-details/ingredient-details";
-import {getAllIngredients} from "../../services/actions/all-ingredients";
-import {useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { GET_INGREDIENT_DETAIL } from "../../services/actions/ingredient-details";
+import { IIngredient } from "../../types";
 
 export default function BurgerIngredients () {
 
@@ -28,7 +25,7 @@ export default function BurgerIngredients () {
                 : setCurrent('three')
     }, [inViewBun, inViewSauce, inViewMain])
 
-    const onModalClick = (ingredient) => (event) => {
+    const onModalClick = (ingredient: IIngredient) => {
         dispatch({ type: GET_INGREDIENT_DETAIL, currentIngredient: ingredient})
     }
 

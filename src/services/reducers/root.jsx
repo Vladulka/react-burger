@@ -1,4 +1,4 @@
-import { combineReducers } from "redux"
+import {combineReducers} from "redux"
 import {allIngredientsReducer} from "./all-ingredients";
 import {burgerConstructorReducer} from "./burger-constructior";
 import {ingredientDetailsReducer} from "./ingredient-details";

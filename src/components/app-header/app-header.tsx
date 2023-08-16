@@ -1,8 +1,8 @@
 import React from 'react';
-import {Logo, BurgerIcon, ListIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./app-header.module.css"
-import {Link, NavLink} from "react-router-dom";
-import {useMatch} from "react-router";
+import { Link, NavLink } from "react-router-dom";
+import { useMatch } from "react-router";
 
 const AppHeader = () => {
     const active = `text text_type_main-default ${style.link}`;

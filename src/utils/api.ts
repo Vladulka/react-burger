@@ -1,4 +1,5 @@
 import {getCookie, setCookie} from "./cookie";
+import { TAuthUser, IIngredient, TResetPassword } from "../types";
 
 const API_URL = "https://norma.nomoreparties.space";
 
@@ -11,7 +12,7 @@ export const getIngredientsData = () => {
         });
 }
 
-export const getOrderDetailsData = (ingredients) => {
+export const getOrderDetailsData = (ingredients: IIngredient[]) => {
     return fetch(`${API_URL}/api/orders`, {
         method: "post",
         headers: {
@@ -28,7 +29,7 @@ export const getOrderDetailsData = (ingredients) => {
         });
 }
 
-export const authUser = ({email, password}) => {
+export const authUser = ({email, password}: TAuthUser) => {
     return fetch(`${API_URL}/api/auth/login`,
         {
             method: "post",
@@ -49,7 +50,7 @@ export const authUser = ({email, password}) => {
         })
 }
 
-export const forgotPassword = (email) => {
+export const forgotPassword = (email: string) => {
     return fetch(`${API_URL}/api/password-reset`,
         {
             method: "post",
@@ -67,7 +68,7 @@ export const forgotPassword = (email) => {
         })
 }
 
-export const resetPassword = ({password, code}) => {
+export const resetPassword = ({password, code}: TResetPassword) => {
     return fetch(`${API_URL}/api/password-reset/reset`,
         {
             method: "post",
@@ -86,7 +87,7 @@ export const resetPassword = ({password, code}) => {
         })
 }
 
-export const registerUser = ({name, email, password}) => {
+export const registerUser = ({name, email, password}: TAuthUser) => {
     return fetch(`${API_URL}/api/auth/register`,
         {
             method: "post",
@@ -142,7 +143,7 @@ export const getUserData = () => {
         })
 }
 
-export const updateUserData = ({name, email, password}) => {
+export const updateUserData = ({name, email, password}: TAuthUser) => {
     return fetchWithRefresh(`${API_URL}/api/auth/user`,
         {
             method: "PATCH",
@@ -164,11 +165,11 @@ export const updateUserData = ({name, email, password}) => {
         })
 }
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: any) => {
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === 'jwt expired') {
             const refreshData = await refreshToken();
             if (!refreshData.success) {
@@ -184,19 +185,13 @@ export const fetchWithRefresh = async (url, options) => {
     }
 };
 
-const request = (endpoint, options) => {
-    return fetch(`${API_URL}${endpoint}`, options)
-        .then(checkResponse)
-        .then(checkSuccess);
-};
-
-export const checkResponse = (response) => {
+export const checkResponse = (response: Response) => {
     return response.ok
         ? response.json()
         : response.json().then((error) => Promise.reject(error));
 };
 
-export const checkSuccess = (res) => {
+export const checkSuccess = (res: any) => {
     if (res && res.success) {
         return res;
     }
