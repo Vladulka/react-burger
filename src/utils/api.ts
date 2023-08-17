@@ -32,7 +32,7 @@ export const getOrderDetailsData = (ingredients: IIngredient[]): Promise<TOrderD
         .then(checkResponse<TOrderDetailsResponse>)
         .then(checkSuccess)
         .then((data) => {
-            return data;
+            return data.data;
         });
 }
 
