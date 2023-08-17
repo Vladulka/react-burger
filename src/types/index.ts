@@ -79,8 +79,8 @@ export interface IUser {
 	password: string
 }
 
-export type TResetPasswordResponse = { message: string }
+export type TResetPasswordResponse = { message: string };
 export type TChangePasswordResponse = TServerResponse<{ data: { message: string } }>
 export type TOrderDetailsResponse = TServerResponse<IOrderDetails>
-export type TAuthResponse = TServerResponse<{ user: IUser } & IAuthToken>
+export type TAuthResponse = TServerResponse<IUser & IAuthToken>
 export type TLogoutResponse = TServerResponse<IAuthToken & { message: string }>

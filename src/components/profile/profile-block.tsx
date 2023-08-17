@@ -22,7 +22,7 @@ const ProfileBlock = () => {
 
     useEffect(() => {
         getUserInfo()(dispatch).then((data) => {
-            setValue({...value, email: data.email, name: data.name})
+            data && setValue({...value, email: data.email, name: data.name})
         })
             .catch(e => {
                 alert(e.message);
