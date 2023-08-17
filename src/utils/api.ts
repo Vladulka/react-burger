@@ -196,7 +196,7 @@ const checkResponse = <T>(res: Response): Promise<T> => {
     return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
 };
 
-export const checkSuccess = (res: any) => {
+export const checkSuccess = (res: any): Promise<any> => {
     if (res && res.success) {
         return res;
     }
