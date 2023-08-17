@@ -5,12 +5,12 @@ import {
     TResetPassword,
     TIngredientsResponse,
     TAuthResponse,
-    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse
+    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse, TChangePasswordResponse
 } from "../types";
 
 const API_URL = "https://norma.nomoreparties.space";
 
-export const getIngredientsData = () => {
+export const getIngredientsData = (): Promise<TIngredientsResponse> => {
     return fetch(`${API_URL}/api/ingredients`)
         .then(checkResponse<TIngredientsResponse>)
         .then(checkSuccess)
@@ -19,7 +19,7 @@ export const getIngredientsData = () => {
         });
 }
 
-export const getOrderDetailsData = (ingredients: IIngredient[]) => {
+export const getOrderDetailsData = (ingredients: IIngredient[]): Promise<TOrderDetailsResponse> => {
     return fetch(`${API_URL}/api/orders`, {
         method: "post",
         headers: {
@@ -36,7 +36,7 @@ export const getOrderDetailsData = (ingredients: IIngredient[]) => {
         });
 }
 
-export const authUser = ({email, password}: TAuthUser) => {
+export const authUser = ({email, password}: TAuthUser): Promise<TAuthResponse> => {
     return fetch(`${API_URL}/api/auth/login`,
         {
             method: "post",
@@ -57,7 +57,7 @@ export const authUser = ({email, password}: TAuthUser) => {
         })
 }
 
-export const forgotPassword = (email: string) => {
+export const forgotPassword = (email: string): Promise<TChangePasswordResponse> => {
     return fetch(`${API_URL}/api/password-reset`,
         {
             method: "post",
@@ -68,14 +68,14 @@ export const forgotPassword = (email: string) => {
                 "email": email,
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TChangePasswordResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.data;
         })
 }
 
-export const resetPassword = ({password, code}: TResetPassword) => {
+export const resetPassword = ({password, code}: TResetPassword): Promise<TChangePasswordResponse> => {
     return fetch(`${API_URL}/api/password-reset/reset`,
         {
             method: "post",
@@ -87,14 +87,14 @@ export const resetPassword = ({password, code}: TResetPassword) => {
                 "token": code
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TChangePasswordResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.message;
         })
 }
 
-export const registerUser = ({name, email, password}: TAuthUser) => {
+export const registerUser = ({name, email, password}: TAuthUser): Promise<TAuthResponse> => {
     return fetch(`${API_URL}/api/auth/register`,
         {
             method: "post",
@@ -116,7 +116,7 @@ export const registerUser = ({name, email, password}: TAuthUser) => {
         })
 }
 
-export const logoutUser = () => {
+export const logoutUser = (): Promise<TLogoutResponse> => {
     return fetch(`${API_URL}/api/auth/logout`,
         {
             method: "post",
@@ -135,7 +135,7 @@ export const logoutUser = () => {
         })
 }
 
-export const getUserData = () => {
+export const getUserData = (): Promise<TAuthResponse> => {
     return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "GET",
@@ -150,7 +150,7 @@ export const getUserData = () => {
         })
 }
 
-export const updateUserData = ({name, email, password}: TAuthUser) => {
+export const updateUserData = ({name, email, password}: TAuthUser): Promise<TAuthResponse> => {
     return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "PATCH",
@@ -172,7 +172,7 @@ export const updateUserData = ({name, email, password}: TAuthUser) => {
         })
 }
 
-export const fetchWithRefresh = async <T>(url: string, options: any) => {
+export const fetchWithRefresh = async <T>(url: string, options: any): Promise<T> => {
     try {
         const res = await fetch(url, options);
         return await checkResponse<T>(res);
@@ -203,7 +203,7 @@ export const checkSuccess = (res: any) => {
     return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const refreshToken = () => {
+export const refreshToken = (): Promise<TRefreshResponse> => {
     return fetch(`${API_URL}/api/auth/token`, {
         method: 'POST',
         headers: {

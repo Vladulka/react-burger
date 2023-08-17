@@ -12,14 +12,12 @@ const ResetPassword = () => {
 
     const reset = localStorage.getItem('reset-email');
 
-    /* eslint-disable */
     useEffect(() => {
         if (getCookie('accessToken') && localStorage.getItem('refreshToken')) navigate('/');
         if(!reset) navigate('/forgot-password');
         if (reset) localStorage.removeItem('reset-email')
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    /* eslint-enable */
 
     const [value, setValue] = React.useState({
         code: '',

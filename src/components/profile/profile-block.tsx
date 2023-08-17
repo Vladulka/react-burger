@@ -20,7 +20,6 @@ const ProfileBlock = () => {
         password: '',
     })
 
-    /* eslint-disable */
     useEffect(() => {
         getUserInfo()(dispatch).then((data) => {
             setValue({...value, email: data.email, name: data.name})
@@ -28,8 +27,8 @@ const ProfileBlock = () => {
             .catch(e => {
                 alert(e.message);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    /* eslint-enable */
 
     const onExitClick = () => {
         logoutUser().then(() => {
