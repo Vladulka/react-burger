@@ -1,16 +1,15 @@
 import React from 'react';
 import style from './ingredient-details.module.css'
-import PropTypes from "prop-types";
-import {useSelector} from "react-redux";
-import {useParams} from "react-router";
-import {ingredientPropType} from "../../../utils/type";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { IIngredient } from "../../../types";
 
 const IngredientDetails = () => {
 
     const {ingredientID} = useParams();
 
-    const ingredients = useSelector(store => store.allIngredients.allIngredients);
-    const ingredient = ingredients.find(ingredient => ingredient._id === ingredientID);
+    const ingredients = useSelector((store: any) => store.allIngredients.allIngredients);
+    const ingredient = ingredients.find((ingredient: IIngredient) => ingredient._id === ingredientID);
 
     if (!ingredient || !ingredientID) {
         return (<></>);
@@ -66,9 +65,5 @@ const IngredientDetails = () => {
         </div>
     );
 };
-
-IngredientDetails.propTypes = {
-    ingredient: ingredientPropType
-}
 
 export default IngredientDetails;

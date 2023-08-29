@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import style from "./modal.module.css";
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
+import { IModal } from "../../../types";
 
-const Modal = ({children, onModalClose}) => {
+const Modal = ({children, onModalClose}: IModal) => {
 
-    const onKeyDown = (event) => {
+    const onKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Escape") {
             onModalClose();
         }
@@ -19,7 +19,7 @@ const Modal = ({children, onModalClose}) => {
     }, []);
 
     return (
-        <div className={style.modal_body} onKeyDown={onKeyDown}>
+        <div className={style.modal_body} onKeyDown={() => onKeyDown}>
             <div className={style.close_btn}>
                 <CloseIcon type="primary" onClick={onModalClose}/>
             </div>
@@ -30,10 +30,5 @@ const Modal = ({children, onModalClose}) => {
     );
 
 };
-
-Modal.propTypes = {
-    children: PropTypes.object,
-    onModalClick: PropTypes.func
-}
 
 export default Modal;

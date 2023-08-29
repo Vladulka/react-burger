@@ -1,11 +1,9 @@
 import React from 'react';
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import styles from "./forgot-password.module.css";
-import {useDispatch} from "react-redux";
-import {forgotPassword} from "../../utils/api";
-import {useNavigate} from "react-router";
-import {setCookie} from "../../utils/cookie";
+import { forgotPassword } from "../../utils/api";
+import { useNavigate } from "react-router";
 
 const ForgotPassword = () => {
 
@@ -13,7 +11,7 @@ const ForgotPassword = () => {
 
     const navigate = useNavigate();
 
-    const onBtnClick = (e) => {
+    const onBtnClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         forgotPassword(email).then(() => {
             localStorage.setItem('reset-email', email);
@@ -25,8 +23,8 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={onBtnClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onBtnClick}>
                 <p className="text text_type_main-medium mb-6">
                     Восстановление пароля
                 </p>

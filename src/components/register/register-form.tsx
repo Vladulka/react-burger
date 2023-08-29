@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styles from './register-form.module.css';
-import {Link} from "react-router-dom";
-import {Button, Input, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch} from "react-redux";
-import {getRegister} from "../../services/actions/registration";
-import {useNavigate} from "react-router";
+import { Link } from "react-router-dom";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
+import { getRegister } from "../../services/actions/registration";
+import { useNavigate } from "react-router";
 
 const RegisterForm = () => {
 
@@ -17,7 +17,7 @@ const RegisterForm = () => {
         password: ''
     })
 
-    const onRegisterClick = (e) => {
+    const onRegisterClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         getRegister(value)(dispatch).then(() => {
             navigate('/');
@@ -28,8 +28,8 @@ const RegisterForm = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={onRegisterClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onRegisterClick}>
                 <p className="text text_type_main-medium mb-6">
                     Регистрация
                 </p>
@@ -38,7 +38,6 @@ const RegisterForm = () => {
                     onChange={e => setValue({...value, name: e.target.value})}
                     value={value.name}
                     name={'email'}
-                    isIcon={false}
                     extraClass={"mb-6"}
                 />
                 <EmailInput
@@ -52,7 +51,6 @@ const RegisterForm = () => {
                     onChange={e => setValue({...value, password: e.target.value})}
                     value={value.password}
                     name={'password'}
-                    isIcon={true}
                     extraClass={"mb-6"}
                 />
                 <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>

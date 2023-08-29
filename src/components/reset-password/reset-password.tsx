@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 import styles from "./reset-password.module.css";
-import {getCookie, setCookie} from "../../utils/cookie";
-import {useNavigate} from "react-router";
-import {resetPassword} from "../../utils/api";
-import {useSelector} from "react-redux";
+import { getCookie } from "../../utils/cookie";
+import { useNavigate } from "react-router";
+import { resetPassword } from "../../utils/api";
 
 const ResetPassword = () => {
 
@@ -17,7 +16,7 @@ const ResetPassword = () => {
         if (getCookie('accessToken') && localStorage.getItem('refreshToken')) navigate('/');
         if(!reset) navigate('/forgot-password');
         if (reset) localStorage.removeItem('reset-email')
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [value, setValue] = React.useState({
@@ -36,8 +35,8 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className={styles.form_block} onSubmit={onBtnClick}>
-            <form className={styles.form}>
+        <div className={styles.form_block}>
+            <form className={styles.form} onSubmit={onBtnClick}>
                 <p className="text text_type_main-medium mb-6">
                     Восстановление пароля
                 </p>

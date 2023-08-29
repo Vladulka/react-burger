@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './block-404.module.css'
-import {Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 
 const Block404 = () => {
     return (

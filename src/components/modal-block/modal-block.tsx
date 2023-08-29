@@ -2,9 +2,11 @@ import React from 'react';
 import ModalOverlay from "./modal-overlay/modal-overlay";
 import {createPortal} from "react-dom";
 import Modal from "./modal/modal";
-import PropTypes from "prop-types";
+import { IModal } from "../../types";
 
-const ModalBlock = ({onModalClose, children}) => {
+const ModalBlock = ({onModalClose, children}: IModal) => {
+
+    const block = document.getElementById('react-modals');
 
     return createPortal(
         (
@@ -14,14 +16,8 @@ const ModalBlock = ({onModalClose, children}) => {
                 </Modal>
                 <ModalOverlay onModalClose={onModalClose}/>
             </>
-        ),
-        document.getElementById("react-modals")
+        ), block as HTMLFormElement
     );
 };
-
-ModalBlock.propTypes = {
-    children: PropTypes.object,
-    onModalClick: PropTypes.func
-}
 
 export default ModalBlock;

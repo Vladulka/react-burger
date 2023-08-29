@@ -1,4 +1,10 @@
-import {ADD_BUN, ADD_INGREDIENT, DEL_INGREDIENT, SORT_INGREDIENTS, DROP_CONSTRUCTOR} from "../actions/burger-constructor";
+import {
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DEL_INGREDIENT,
+    DROP_CONSTRUCTOR,
+    SORT_INGREDIENTS
+} from "../actions/burger-constructor";
 
 const initialData = {
     items: [],

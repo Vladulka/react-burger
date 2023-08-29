@@ -1,11 +1,10 @@
-import React     from 'react';
-import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import React from 'react';
+import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './login-form.module.css';
-import {Link, useNavigate} from "react-router-dom";
-import {authUser} from "../../utils/api";
-import {useDispatch, useSelector} from "react-redux";
-import {getAuth} from "../../services/actions/authorization";
-import {useLocation} from "react-router";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getAuth } from "../../services/actions/authorization";
+import { useLocation } from "react-router";
 
 const LoginForm = () => {
 
@@ -18,7 +17,7 @@ const LoginForm = () => {
         password: ''
     })
 
-    const onLoginClick = (e) => {
+    const onLoginClick = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         getAuth(value)(dispatch).then(() => {
             const redirectTo = location?.state?.redirectTo?.pathname

@@ -1,17 +1,25 @@
 import {getCookie, setCookie} from "./cookie";
+import {
+    TAuthUser,
+    IIngredient,
+    TResetPassword,
+    TIngredientsResponse,
+    TAuthResponse,
+    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse, TChangePasswordResponse
+} from "../types";
 
 const API_URL = "https://norma.nomoreparties.space";
 
-export const getIngredientsData = () => {
+export const getIngredientsData = (): Promise<TIngredientsResponse> => {
     return fetch(`${API_URL}/api/ingredients`)
-        .then(checkResponse)
+        .then(checkResponse<TIngredientsResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.data
         });
 }
 
-export const getOrderDetailsData = (ingredients) => {
+export const getOrderDetailsData = (ingredients: IIngredient[]): Promise<TOrderDetailsResponse> => {
     return fetch(`${API_URL}/api/orders`, {
         method: "post",
         headers: {
@@ -21,14 +29,14 @@ export const getOrderDetailsData = (ingredients) => {
             "ingredients": ingredients
         })
     })
-        .then(checkResponse)
+        .then(checkResponse<TOrderDetailsResponse>)
         .then(checkSuccess)
         .then((data) => {
-            return data;
+            return data.data;
         });
 }
 
-export const authUser = ({email, password}) => {
+export const authUser = ({email, password}: TAuthUser): Promise<TAuthResponse> => {
     return fetch(`${API_URL}/api/auth/login`,
         {
             method: "post",
@@ -40,7 +48,7 @@ export const authUser = ({email, password}) => {
                 "password": password
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TAuthResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -49,7 +57,7 @@ export const authUser = ({email, password}) => {
         })
 }
 
-export const forgotPassword = (email) => {
+export const forgotPassword = (email: string): Promise<TChangePasswordResponse> => {
     return fetch(`${API_URL}/api/password-reset`,
         {
             method: "post",
@@ -60,14 +68,14 @@ export const forgotPassword = (email) => {
                 "email": email,
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TChangePasswordResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.data;
         })
 }
 
-export const resetPassword = ({password, code}) => {
+export const resetPassword = ({password, code}: TResetPassword): Promise<TChangePasswordResponse> => {
     return fetch(`${API_URL}/api/password-reset/reset`,
         {
             method: "post",
@@ -79,14 +87,14 @@ export const resetPassword = ({password, code}) => {
                 "token": code
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TChangePasswordResponse>)
         .then(checkSuccess)
         .then((data) => {
             return data.message;
         })
 }
 
-export const registerUser = ({name, email, password}) => {
+export const registerUser = ({name, email, password}: TAuthUser): Promise<TAuthResponse> => {
     return fetch(`${API_URL}/api/auth/register`,
         {
             method: "post",
@@ -99,7 +107,7 @@ export const registerUser = ({name, email, password}) => {
                 "password": password
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TAuthResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -108,7 +116,7 @@ export const registerUser = ({name, email, password}) => {
         })
 }
 
-export const logoutUser = () => {
+export const logoutUser = (): Promise<TLogoutResponse> => {
     return fetch(`${API_URL}/api/auth/logout`,
         {
             method: "post",
@@ -119,7 +127,7 @@ export const logoutUser = () => {
                 "token": localStorage.getItem('refreshToken'),
             })
         })
-        .then(checkResponse)
+        .then(checkResponse<TLogoutResponse>)
         .then(checkSuccess)
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
@@ -127,8 +135,8 @@ export const logoutUser = () => {
         })
 }
 
-export const getUserData = () => {
-    return fetchWithRefresh(`${API_URL}/api/auth/user`,
+export const getUserData = (): Promise<TAuthResponse> => {
+    return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "GET",
             headers: {
@@ -142,8 +150,8 @@ export const getUserData = () => {
         })
 }
 
-export const updateUserData = ({name, email, password}) => {
-    return fetchWithRefresh(`${API_URL}/api/auth/user`,
+export const updateUserData = ({name, email, password}: TAuthUser): Promise<TAuthResponse> => {
+    return fetchWithRefresh<TAuthResponse>(`${API_URL}/api/auth/user`,
         {
             method: "PATCH",
             headers: {
@@ -164,11 +172,11 @@ export const updateUserData = ({name, email, password}) => {
         })
 }
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async <T>(url: string, options: any): Promise<T> => {
     try {
         const res = await fetch(url, options);
-        return await checkResponse(res);
-    } catch (err) {
+        return await checkResponse<T>(res);
+    } catch (err: any) {
         if (err.message === 'jwt expired') {
             const refreshData = await refreshToken();
             if (!refreshData.success) {
@@ -178,33 +186,24 @@ export const fetchWithRefresh = async (url, options) => {
             setCookie('accessToken', refreshData.accessToken);
             options.headers.authorization = refreshData.accessToken;
             const res = await fetch(url, options);
-            return checkResponse(res);
+            return checkResponse<T>(res);
         }
         return Promise.reject(err);
     }
 };
 
-const request = (endpoint, options) => {
-    return fetch(`${API_URL}${endpoint}`, options)
-        .then(checkResponse)
-        .then(checkSuccess);
+const checkResponse = <T>(res: Response): Promise<T> => {
+    return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
 };
 
-export const checkResponse = (response) => {
-    return response.ok
-        ? response.json()
-        : response.json().then((error) => Promise.reject(error));
-};
-
-export const checkSuccess = (res) => {
+export const checkSuccess = (res: any): Promise<any> => {
     if (res && res.success) {
         return res;
     }
-
     return Promise.reject(`Ответ не success: ${res}`);
 };
 
-export const refreshToken = () => {
+export const refreshToken = (): Promise<TRefreshResponse> => {
     return fetch(`${API_URL}/api/auth/token`, {
         method: 'POST',
         headers: {
@@ -213,5 +212,5 @@ export const refreshToken = () => {
         body: JSON.stringify({
             token: localStorage.getItem('refreshToken'),
         }),
-    }).then(checkResponse);
+    }).then(checkResponse<TRefreshResponse>);
 };
