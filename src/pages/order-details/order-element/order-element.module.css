@@ -1,0 +1,26 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image_block {
+    display: flex;
+    align-items: center;
+    width: 410px;
+}
+
+.image {
+    height: 64px;
+    width: 64px;
+    object-fit: cover;
+    background: linear-gradient(#1C1C21, #1C1C21) padding-box,
+    linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+}
+
+.span {
+    display: flex;
+    align-items: center;
+}
