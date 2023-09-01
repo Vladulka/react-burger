@@ -1,5 +1,11 @@
-import {GET_USER_FAILED, GET_USER_REQUEST, GET_USER_SUCCESS} from "../actions/user";
-import { AllInitialTypes, IIngredient, TAuthDataResponse } from "../../types";
+import {
+    CLEAN_USER_DATA,
+    GET_USER_FAILED,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    SET_CHECK_SUCCESS
+} from "../actions/user";
+import { AllInitialTypes } from "../../types";
 
 const initialData = {
     user: {
@@ -7,10 +13,12 @@ const initialData = {
         name: ""
     },
     userRequest: false,
-    userFailed: false
+    userFailed: false,
+    isAuthChecked: false,
 }
 
 type InitialUserType = {
+    isAuthChecked: boolean;
     user: {
         email: string,
         name: string
@@ -32,7 +40,8 @@ export const userReducer = (state = initialData, action: AllInitialTypes): Initi
                 ...state,
                 userFailed: false,
                 user: action.data,
-                userRequest: false
+                userRequest: false,
+                isAuthChecked: true
             };
         }
         case GET_USER_FAILED: {
@@ -42,7 +51,23 @@ export const userReducer = (state = initialData, action: AllInitialTypes): Initi
                     name: ""
                 },
                 userFailed: true,
-                userRequest: false
+                userRequest: false,
+                isAuthChecked: true
+            };
+        }
+        case SET_CHECK_SUCCESS: {
+            return {
+                ...state,
+                isAuthChecked: true
+            };
+        }
+        case CLEAN_USER_DATA: {
+            return {
+                ...state,
+                userFailed: false,
+                user: initialData.user,
+                userRequest: false,
+                isAuthChecked: true
             };
         }
         default: {

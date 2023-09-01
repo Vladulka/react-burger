@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Outlet, useMatch, useNavigate } from "react-router";
-import { GET_USER_SUCCESS, getUserInfo } from "../../services/actions/user";
+import { CLEAN_USER_DATA, GET_USER_SUCCESS, getUserInfo } from "../../services/actions/user";
 import { logoutUser, updateUserData } from "../../utils/api";
 import { setCookie } from "../../utils/cookie";
 import styles from "./profile-block.module.css";
@@ -41,6 +41,9 @@ const ProfilePage = () => {
 		logoutUser().then(() => {
 			setCookie('accessToken', '', -1);
 			localStorage.removeItem('refreshToken');
+			dispatch({
+				type: CLEAN_USER_DATA
+			});
 			navigate('/login');
 		})
 			.catch(e => {

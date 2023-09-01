@@ -2,7 +2,6 @@ import {authUser} from "../../utils/api";
 import { TAuthDataResponse, TAuthUser } from "../../types";
 import { AppDispatch } from "../../utils/hooks";
 
-
 export const GET_AUTH_REQUEST: 'GET_AUTH_REQUEST' = 'GET_AUTH_REQUEST';
 export const GET_AUTH_SUCCESS: 'GET_AUTH_SUCCESS' = 'GET_AUTH_SUCCESS';
 export const GET_AUTH_FAILED: 'GET_AUTH_FAILED' = 'GET_AUTH_FAILED';

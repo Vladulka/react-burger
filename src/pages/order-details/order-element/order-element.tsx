@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './order-element.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IIngredient } from "../../../types";
@@ -10,7 +10,12 @@ type TOrderElement = {
 
 const OrderElement = ({ ingredient, ingredients }: TOrderElement) => {
 
-	const similarIngredientsCount = ingredient.type === "bun" ? 2: ingredients.filter(element => ingredient._id === element._id).length;
+	const similarIngredientsCount = useMemo(
+		() => {
+			return ingredient.type === "bun" ? 2: ingredients.filter(element => ingredient._id === element._id).length;
+		},
+		[ingredient]
+	);
 
 	return (
 		<li className={ `mr-6 ${styles.main}` }>
