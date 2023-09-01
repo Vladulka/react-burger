@@ -8,16 +8,17 @@ export const getOrderIngredients = (ingredients: string[], allIngredients: IIngr
 			orderIngredients.push(item)
 		}
 	});
+
 	return orderIngredients;
 }
 
 export const getUniqIngredients = (ingredients: IIngredient[]) => {
-	let orderIngredients: IIngredient[] = [];
+	let orderIngredients: IIngredient[] = ingredients.reduce((prevValue: IIngredient[], item: IIngredient) => {
+		const existingItem = prevValue.find(i => i._id === item._id);
+		if (!existingItem) { prevValue.push(item); }
 
-	ingredients.forEach(item => {
-		const existingItem = orderIngredients.find(i => i._id === item._id);
-		if (!existingItem) { orderIngredients.push(item) }
-	});
+		return prevValue;
+	}, [] as IIngredient[])
 
 	return orderIngredients;
-}
+};
