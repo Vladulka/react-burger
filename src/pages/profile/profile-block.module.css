@@ -1,7 +1,7 @@
 .main_block {
     grid-column: 1 / 3;
     width: 100%;
-    max-width: 940px;
+    max-width: 1240px;
     margin: 0 auto 0 auto;
     display: flex;
     flex-direction: row;
@@ -10,9 +10,24 @@
 }
 
 .item {
+    flex: 0.5;
+    padding: 0;
+    display: inline-block;
+}
+
+.item_orders {
     flex: 1;
     padding: 0;
     display: inline-block;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.active_text {
+    color: var(--text-primary-color);
+    cursor: default;
 }
 
 .inactive_text {

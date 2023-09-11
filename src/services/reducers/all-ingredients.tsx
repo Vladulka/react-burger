@@ -3,14 +3,21 @@ import {
     GET_ALL_INGREDIENTS_REQUEST,
     GET_ALL_INGREDIENTS_SUCCESS
 } from "../actions/all-ingredients";
+import { AllInitialTypes, IIngredient } from "../../types";
 
 const initialData = {
-    allIngredients: [],
+    allIngredients: [] as Array<IIngredient>,
     ingredientsRequest: false,
     ingredientsFailed: false
 }
 
-export const allIngredientsReducer = (state = initialData, action) => {
+type InitialAllIngredientsType = {
+    allIngredients: Array<IIngredient>,
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
+};
+
+export const allIngredientsReducer = (state = initialData, action: AllInitialTypes): InitialAllIngredientsType => {
     switch (action.type) {
         case GET_ALL_INGREDIENTS_REQUEST: {
             return {

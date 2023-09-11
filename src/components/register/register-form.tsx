@@ -2,13 +2,14 @@ import React from 'react';
 import styles from './register-form.module.css';
 import { Link } from "react-router-dom";
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { getRegister } from "../../services/actions/registration";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../utils/hooks";
 
 const RegisterForm = () => {
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+
     const navigate = useNavigate();
 
     const [value, setValue] = React.useState({

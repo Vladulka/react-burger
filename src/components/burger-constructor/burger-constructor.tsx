@@ -2,14 +2,14 @@ import React from 'react';
 import style from "./burger-constructor.module.css"
 import BurgerConstructorElement from "./burger-constructor-element/burger-constructor-element";
 import BurgerConstructorFooter from "./burger-constructor-footer/burger-constructor-footer";
-import {useSelector} from "react-redux";
 import { useDrop } from "react-dnd";
 import { IDragItem, IIngredient } from "../../types";
+import { useAppSelector } from "../../utils/hooks";
 
 const BurgerConstructor = ({onDropHandler}: {onDropHandler: (item: IIngredient) => void}) => {
 
-     const ingredients = useSelector((store: any) => store.burgerConstructor.items);
-     const bun = useSelector((store: any) => store.burgerConstructor.bun);
+     const ingredients = useAppSelector((store) => store.burgerConstructor.items);
+     const bun = useAppSelector((store) => store.burgerConstructor.bun);
 
      const [, dropRef] = useDrop({
          accept: 'ingredients',

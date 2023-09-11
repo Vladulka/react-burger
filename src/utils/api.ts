@@ -1,32 +1,36 @@
 import {getCookie, setCookie} from "./cookie";
 import {
     TAuthUser,
-    IIngredient,
     TResetPassword,
     TIngredientsResponse,
     TAuthResponse,
-    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse, TChangePasswordResponse
+    TOrderDetailsResponse, TRefreshResponse, TLogoutResponse, TChangePasswordResponse, TAuthDataResponse
 } from "../types";
 
 const API_URL = "https://norma.nomoreparties.space";
+export const API_WS_URL = "wss://norma.nomoreparties.space";
 
 export const getIngredientsData = (): Promise<TIngredientsResponse> => {
     return fetch(`${API_URL}/api/ingredients`)
         .then(checkResponse<TIngredientsResponse>)
         .then(checkSuccess)
         .then((data) => {
-            return data.data
+            return data;
         });
 }
 
-export const getOrderDetailsData = (ingredients: IIngredient[]): Promise<TOrderDetailsResponse> => {
+export const getOrderDetailsData = (ingredients: Array<string | undefined>): Promise<TOrderDetailsResponse> => {
     return fetch(`${API_URL}/api/orders`, {
-        method: "post",
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            "Content-Type": "application/json",
+            authorization: getCookie('accessToken')
+        } as {
+            'Content-Type': string;
+            authorization?: string | undefined,
         },
+        method: 'POST',
         body: JSON.stringify({
-            "ingredients": ingredients
+            'ingredients': ingredients
         })
     })
         .then(checkResponse<TOrderDetailsResponse>)
@@ -36,7 +40,7 @@ export const getOrderDetailsData = (ingredients: IIngredient[]): Promise<TOrderD
         });
 }
 
-export const authUser = ({email, password}: TAuthUser): Promise<TAuthResponse> => {
+export const authUser = ({email, password}: TAuthUser): Promise<TAuthDataResponse> => {
     return fetch(`${API_URL}/api/auth/login`,
         {
             method: "post",
@@ -53,7 +57,7 @@ export const authUser = ({email, password}: TAuthUser): Promise<TAuthResponse> =
         .then((data) => {
             setCookie('accessToken', data?.accessToken);
             localStorage.setItem('refreshToken', data?.refreshToken);
-            return data.data;
+            return data;
         })
 }
 

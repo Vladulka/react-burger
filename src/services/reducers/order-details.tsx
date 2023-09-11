@@ -1,12 +1,19 @@
 import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "../actions/order-details";
+import { AllInitialTypes, IOrderDetails } from "../../types";
 
 const initialData = {
-    order: {},
+    order: {} as IOrderDetails,
     orderRequest: false,
     orderFailed: false,
 }
 
-export const orderDetailsReducer = (state = initialData, action) => {
+type InitialAllIngredientsType = {
+    order: IOrderDetails,
+    orderRequest: boolean,
+    orderFailed: boolean,
+};
+
+export const orderDetailsReducer = (state = initialData, action: AllInitialTypes): InitialAllIngredientsType => {
     switch (action.type) {
         case  GET_ORDER_REQUEST: {
             return {
@@ -24,7 +31,7 @@ export const orderDetailsReducer = (state = initialData, action) => {
         }
         case GET_ORDER_FAILED: {
             return {
-                order: {},
+                order: initialData.order,
                 orderFailed: true,
                 orderRequest: false
             };

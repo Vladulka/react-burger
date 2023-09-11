@@ -1,4 +1,5 @@
 import {GET_REGISTER_FAILED, GET_REGISTER_REQUEST, GET_REGISTER_SUCCESS} from "../actions/registration";
+import { AllInitialTypes, IIngredient, TAuthResponse } from "../../types";
 
 const initialData = {
     registerData: {
@@ -13,7 +14,13 @@ const initialData = {
     registerFailed: false
 }
 
-export const registrationReducer = (state = initialData, action) => {
+type InitialRegisterType = {
+    registerData: TAuthResponse | {},
+    registerRequest: boolean,
+    registerFailed: boolean,
+};
+
+export const registrationReducer = (state = initialData, action: AllInitialTypes): InitialRegisterType => {
     switch (action.type) {
         case GET_REGISTER_REQUEST: {
             return {

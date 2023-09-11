@@ -1,4 +1,5 @@
 import {GET_AUTH_FAILED, GET_AUTH_REQUEST, GET_AUTH_SUCCESS} from "../actions/authorization";
+import { AllInitialTypes } from "../../types";
 
 const initialData = {
     authData: {
@@ -13,7 +14,20 @@ const initialData = {
     authFailed: false
 }
 
-export const authorizationReducer = (state = initialData, action) => {
+type InitialAuthType = {
+    authData: {
+        accessToken: string,
+        refreshToken: string,
+        user: {
+            email: string,
+            name: string
+        }
+    },
+    authRequest: boolean,
+    authFailed: boolean,
+};
+
+export const authorizationReducer = (state = initialData, action: AllInitialTypes): InitialAuthType => {
     switch (action.type) {
         case GET_AUTH_REQUEST: {
             return {
@@ -31,7 +45,7 @@ export const authorizationReducer = (state = initialData, action) => {
         }
         case GET_AUTH_FAILED: {
             return {
-                authData: {},
+                authData: state.authData,
                 authFailed: true,
                 authRequest: false
             };
