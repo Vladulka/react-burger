@@ -3,15 +3,15 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./burger-ingredients.module.css";
 import IngredientBlock from "./ingredient-block/ingredient-block";
 import { useInView } from 'react-intersection-observer';
-import { useDispatch } from "react-redux";
 import { GET_INGREDIENT_DETAIL } from "../../services/actions/ingredient-details";
 import { IIngredient } from "../../types";
+import { useAppDispatch } from "../../utils/hooks";
 
 export default function BurgerIngredients () {
 
     const [current, setCurrent] = React.useState('one');
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { ref: refBun, inView: inViewBun } = useInView({ threshold: 0 });
     const { ref: refSauce, inView: inViewSauce } = useInView({ threshold: 0});

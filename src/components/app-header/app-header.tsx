@@ -10,6 +10,7 @@ const AppHeader = () => {
 
     const profilePage = !!useMatch('/profile');
     const homePage = !!useMatch('/');
+    const feedPage = !!useMatch('/feed');
 
     return (
         <header className={`${style.header} pt-4 pb-4`}>
@@ -28,14 +29,20 @@ const AppHeader = () => {
                             </p>
                         </li>
                     </NavLink>
-                    <a href={"#"} className={style.link}>
+                    <NavLink
+                        to="/feed"
+                        className={({isActive}) =>
+                            isActive ? active : inactive
+                        }
+                    >
                         <li className={`${style.header_li} p-5 ml-2`}>
-                            <ListIcon type="secondary"/>
-                            <p className="text text_type_main-default text_color_inactive ml-2">
+                            <ListIcon type={ feedPage ? "primary" : "secondary"} />
+                            <p className="text text_type_main-default ml-2">
                                 Лента заказов
                             </p>
                         </li>
-                    </a>
+                    </NavLink>
+
                 </ul>
                 <div className={style.header_item}>
                     <Link to={'/'}>

@@ -21,7 +21,9 @@ const Modal = ({children, onModalClose}: IModal) => {
     return (
         <div className={style.modal_body} onKeyDown={() => onKeyDown}>
             <div className={style.close_btn}>
-                <CloseIcon type="primary" onClick={onModalClose}/>
+                <a data-test-marker="modal-close">
+                    <CloseIcon type="primary" onClick={onModalClose} />
+                </a>
             </div>
             <div>
                 {children}

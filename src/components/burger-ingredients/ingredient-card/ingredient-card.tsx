@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-card.module.css";
-import {useSelector} from "react-redux";
 import {useDrag} from "react-dnd";
 import {Link} from "react-router-dom";
 import {useLocation} from "react-router";
 import { IIngredient } from "../../../types";
+import { useAppSelector } from "../../../utils/hooks";
 
 export interface IIngredientCard {
     onModalClick: (data: IIngredient) => void,
@@ -16,7 +16,7 @@ const IngredientCard = ({onModalClick, data}: IIngredientCard) => {
 
     const location = useLocation();
     const [totalCount, setTotalCount] = useState(0);
-    const { items, bun } = useSelector((state: any) => state.burgerConstructor);
+    const { items, bun } = useAppSelector((state) => state.burgerConstructor);
 
     useEffect(() => {
         if (bun._id === data._id) {
@@ -35,7 +35,7 @@ const IngredientCard = ({onModalClick, data}: IIngredientCard) => {
     });
 
     return (
-        <div ref={dragRef} className={style.ingredient_card} onClick={() => onModalClick(data)}>
+        <div ref={dragRef} className={style.ingredient_card} onClick={() => onModalClick(data)} data-test-marker={ "current-ingredient" }>
             <Link
                 to={{ pathname: `/ingredients/${data._id}` }}
                 state={{ background: location }}

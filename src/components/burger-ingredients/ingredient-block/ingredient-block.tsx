@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import style from "./ingredient-block.module.css";
 import IngredientCard from "../ingredient-card/ingredient-card";
-import {useSelector} from "react-redux";
 import { IIngredient } from "../../../types";
+import { useAppSelector } from "../../../utils/hooks";
 
 export interface IIngredientBlock {
     type: string,
@@ -12,18 +12,18 @@ export interface IIngredientBlock {
 
 const IngredientBlock = ({type, onModalClick, lookRef}: IIngredientBlock) => {
 
-    const data: IIngredient[] = useSelector((store: any) => store.allIngredients.allIngredients);
-    const ingredientsRequest: IIngredient[] = useSelector((store: any) => store.allIngredients.ingredientsRequest);
+    const data = useAppSelector((store: any) => store.allIngredients.allIngredients);
+    const ingredientsRequest = useAppSelector((store: any) => store.allIngredients.ingredientsRequest);
 
     const ingredients = useMemo(
         () => {
-            return data.filter(el => el.type === type);
+            return data.filter((el: IIngredient) => el.type === type);
         },
         [type, data]
     );
 
     return (
-        <div>
+        <div data-test-marker={type}>
             <p ref={lookRef} className={`${style.ingredients_subtitle} text text_type_main-default mt-10 mb-6`}>
                 { type === "bun" ? "Булка" : type === "sauce" ? "Соусы" : "Начинки" }
             </p>

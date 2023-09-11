@@ -57,8 +57,7 @@ const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false,
     const opacity = isDragging ? 0 : 1;
     dragSort(dropSort(ref));
 
-    const handleClose = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    const handleClose = () => {
         dispatch({ type: DEL_INGREDIENT, id: itemID })
     }
 
@@ -72,7 +71,7 @@ const BurgerConstructorElement = ({itemID, name, price, image, isLocked = false,
                 price={price}
                 thumbnail={image}
                 extraClass={"ml-2 mb-4"}
-                handleClose={() => handleClose}
+                handleClose={handleClose}
             />
         </div>
     );

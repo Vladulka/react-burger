@@ -3,10 +3,11 @@ import style from "./burger-constructor-footer.module.css";
 import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetails from "../order-details/order-details";
 import ModalBlock from "../../modal-block/modal-block";
-import {useDispatch, useSelector} from "react-redux";
 import {getOrderDetails} from "../../../services/actions/order-details";
 import {getCookie} from "../../../utils/cookie";
 import {useNavigate} from "react-router";
+import { IIngredient } from "../../../types";
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks";
 
 const initialState =  { count: 0 };
 
@@ -26,10 +27,10 @@ function reducer(state: any, action: any) {
 const BurgerConstructorFooter = () => {
 
     const navigate = useNavigate();
-    const dispatchRedux: any = useDispatch();
+    const dispatchRedux = useAppDispatch();
 
-    const {items, bun} = useSelector((store: any) => store.burgerConstructor);
-    const {order, orderRequest} = useSelector((store: any) => store.orderDetails);
+    const {items, bun} = useAppSelector((store) => store.burgerConstructor);
+    const {order, orderRequest} = useAppSelector((store) => store.orderDetails);
 
     const [modal, setModal] = useState(false);
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -48,7 +49,11 @@ const BurgerConstructorFooter = () => {
             alert("Добавьте ингредиенты!");
         } else  {
             if(getCookie('accessToken') && localStorage.getItem('refreshToken')) {
-                dispatchRedux(getOrderDetails(...items.map(({ _id }: { _id: number }) => _id), bun.itemID, bun.itemID));
+                const ingredientsId = items.map((item: IIngredient) => item._id)
+                ingredientsId.push(bun._id);
+                ingredientsId.push(bun._id);
+
+                dispatchRedux(getOrderDetails(ingredientsId));
                 setModal(true);
             } else {
                 navigate('/login');
@@ -66,7 +71,7 @@ const BurgerConstructorFooter = () => {
                 <p className="text text_type_digits-medium mr-2">{state.count ? state.count : 0}</p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <Button htmlType="button" type="primary" size="large" onClick={onModalClick}>
+            <Button htmlType="button" type="primary" size="large" onClick={onModalClick} data-test-marker="submit-order-button">
                 Оформить заказ
             </Button>
             {
