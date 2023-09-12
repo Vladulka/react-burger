@@ -1,6 +1,6 @@
 # GH - pages link: 
 
-Вы можете посмотреть проект здесь [:point_right:] [react-burger](https://vladulka.github.io/react-burger/)
+Вы можете посмотреть проект здесь :point_right: [react-burger](https://vladulka.github.io/react-burger/)
 
 # Getting Started with Create React App
 
