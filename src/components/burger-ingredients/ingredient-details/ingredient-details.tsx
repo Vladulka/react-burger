@@ -16,7 +16,7 @@ const IngredientDetails = () => {
 	}
 
 	return (
-		<div className={ style.details }>
+		<div className={ style.details } data-test-marker="ingredient-details">
 			<div className={ "pt-10 pl-10 pr-10" }>
 				<div className={ style.details_header }>
 					<p className="text text_type_main-large">
@@ -24,7 +24,7 @@ const IngredientDetails = () => {
 					</p>
 				</div>
 				<img className={ style.img } src={ ingredient.image_large } alt={ ingredient.name }/>
-				<p className={ `text text_type_main-default mt-4 ${ style.name }` }>
+				<p className={ `text text_type_main-default mt-4 ${ style.name }` } data-test-marker="name">
 					{ ingredient.name }
 				</p>
 				<div className={ `${ style.info_block } mt-8 mb-15` }>
@@ -32,7 +32,7 @@ const IngredientDetails = () => {
 						<p className="text text_type_main-default text_color_inactive">
 							Калории,ккал
 						</p>
-						<p className="text text_type_main-default text_color_inactive">
+						<p className="text text_type_main-default text_color_inactive" data-test-marker="calories">
 							{ ingredient.calories }
 						</p>
 					</div>
@@ -40,7 +40,7 @@ const IngredientDetails = () => {
 						<p className="text text_type_main-default text_color_inactive">
 							Белки, г
 						</p>
-						<p className="text text_type_main-default text_color_inactive">
+						<p className="text text_type_main-default text_color_inactive" data-test-marker="proteins">
 							{ ingredient.proteins }
 						</p>
 					</div>
@@ -48,7 +48,7 @@ const IngredientDetails = () => {
 						<p className="text text_type_main-default text_color_inactive">
 							Жиры, г
 						</p>
-						<p className="text text_type_main-default text_color_inactive">
+						<p className="text text_type_main-default text_color_inactive" data-test-marker="fat">
 							{ ingredient.fat }
 						</p>
 					</div>
@@ -56,7 +56,7 @@ const IngredientDetails = () => {
 						<p className="text text_type_main-default text_color_inactive">
 							Углеводы, г
 						</p>
-						<p className="text text_type_main-default text_color_inactive">
+						<p className="text text_type_main-default text_color_inactive" data-test-marker="carbohydrates">
 							{ ingredient.carbohydrates }
 						</p>
 					</div>

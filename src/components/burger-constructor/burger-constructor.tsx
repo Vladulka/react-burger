@@ -19,7 +19,7 @@ const BurgerConstructor = ({onDropHandler}: {onDropHandler: (item: IIngredient) 
      });
 
     return (
-        <div className={"mt-25"} ref={dropRef}>
+        <div className={"mt-25"} ref={dropRef} data-test-market="burger-constructor">
             <div className={style.burger_list_locked}>
                 {bun._id && <BurgerConstructorElement elementType={'top'} isLocked {...bun} name={bun.name + ' (верх)'}/>}
             </div>

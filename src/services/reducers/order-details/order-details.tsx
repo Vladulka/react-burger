@@ -1,7 +1,7 @@
-import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "../actions/order-details";
-import { AllInitialTypes, IOrderDetails } from "../../types";
+import {GET_ORDER_FAILED, GET_ORDER_REQUEST, GET_ORDER_SUCCESS} from "../../actions/order-details";
+import { AllInitialTypes, IOrderDetails } from "../../../types";
 
-const initialData = {
+export const initialData = {
     order: {} as IOrderDetails,
     orderRequest: false,
     orderFailed: false,

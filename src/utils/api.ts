@@ -36,7 +36,7 @@ export const getOrderDetailsData = (ingredients: Array<string | undefined>): Pro
         .then(checkResponse<TOrderDetailsResponse>)
         .then(checkSuccess)
         .then((data) => {
-            return data.data;
+            return data.order;
         });
 }
 

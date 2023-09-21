@@ -72,7 +72,7 @@ export interface IAuthToken {
 }
 
 export interface IOrderDetails {
-	length: number;
+	length?: number;
 	createdAt: string;
 	ingredients: Array<string>;
 	name: string;

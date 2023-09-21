@@ -48,7 +48,7 @@ const LoginForm = () => {
                     name={'password'}
                     extraClass={"mb-6"}
                 />
-                <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"}>
+                <Button htmlType="submit" type="primary" size="medium" extraClass={"mb-20"} data-test-marker="submit-login-button">
                     Войти
                 </Button>
                 <span className={styles.text_footer}>

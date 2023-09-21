@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {Provider} from 'react-redux';
-import {BrowserRouter as Router} from "react-router-dom";
 import {App} from "./components/app/app";
 import {store} from "./services/reducers/root";
+import { HashRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')
@@ -12,10 +12,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <Router>
+        <HashRouter>
             <Provider store={store}>
                 <App />
             </Provider>
-        </Router>
+        </HashRouter>
     </React.StrictMode>
 );

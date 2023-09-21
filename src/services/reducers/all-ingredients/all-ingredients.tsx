@@ -2,10 +2,10 @@ import {
     GET_ALL_INGREDIENTS_FAILED,
     GET_ALL_INGREDIENTS_REQUEST,
     GET_ALL_INGREDIENTS_SUCCESS
-} from "../actions/all-ingredients";
-import { AllInitialTypes, IIngredient } from "../../types";
+} from "../../actions/all-ingredients";
+import { AllInitialTypes, IIngredient } from "../../../types";
 
-const initialData = {
+export const initialData = {
     allIngredients: [] as Array<IIngredient>,
     ingredientsRequest: false,
     ingredientsFailed: false

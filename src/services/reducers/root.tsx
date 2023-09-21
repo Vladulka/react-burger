@@ -1,17 +1,17 @@
 import {combineReducers} from "redux"
-import {allIngredientsReducer} from "./all-ingredients";
-import {burgerConstructorReducer} from "./burger-constructior";
-import {ingredientDetailsReducer} from "./ingredient-details";
-import {orderDetailsReducer} from "./order-details";
-import {authorizationReducer} from "./authorization";
-import {registrationReducer} from "./registration";
-import {userReducer} from "./user";
-import {orderHistoryReducer} from "./order-list";
+import {allIngredientsReducer} from "./all-ingredients/all-ingredients";
+import {burgerConstructorReducer} from "./burger-constructor/burger-constructior";
+import {ingredientDetailsReducer} from "./ingredient-details/ingredient-details";
+import {orderDetailsReducer} from "./order-details/order-details";
+import {authorizationReducer} from "./authorization/authorization";
+import {registrationReducer} from "./registration/registration";
+import {userReducer} from "./user/user";
+import {orderHistoryReducer} from "./order-list/order-list";
 import {configureStore, MiddlewareArray} from "@reduxjs/toolkit";
 import {socketOrdersMiddleware} from "../middlewares/web-middleware";
 import thunk from "redux-thunk";
 import {webSocket} from "../actions/web-socket";
-import { orderInfoReducer } from "./order-info";
+import { orderInfoReducer } from "./order-info/order-info";
 
 export const rootReducer = combineReducers({
     allIngredients: allIngredientsReducer,

@@ -1,7 +1,7 @@
-import {GET_AUTH_FAILED, GET_AUTH_REQUEST, GET_AUTH_SUCCESS} from "../actions/authorization";
-import { AllInitialTypes } from "../../types";
+import {GET_AUTH_FAILED, GET_AUTH_REQUEST, GET_AUTH_SUCCESS} from "../../actions/authorization";
+import { AllInitialTypes } from "../../../types";
 
-const initialData = {
+export const initialData = {
     authData: {
         accessToken: "",
         refreshToken: "",
@@ -14,7 +14,7 @@ const initialData = {
     authFailed: false
 }
 
-type InitialAuthType = {
+export type InitialAuthType = {
     authData: {
         accessToken: string,
         refreshToken: string,

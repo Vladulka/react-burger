@@ -1,7 +1,7 @@
-import { OrderHistoryDetailsType } from "../../types";
-import { WS_CLOSE, WS_ERROR, WS_MESSAGE, WS_OPEN, WsActionTypes } from "../actions/web-socket";
+import { AllInitialTypes, OrderHistoryDetailsType } from "../../../types";
+import { WS_CLOSE, WS_ERROR, WS_MESSAGE, WS_OPEN } from "../../actions/web-socket";
 
-const orderHistoryDetails: OrderHistoryDetailsType = {
+export const orderHistoryDetails: OrderHistoryDetailsType = {
 	connect: false,
 	error: false,
 	orderDetails: {
@@ -22,8 +22,8 @@ const orderHistoryDetails: OrderHistoryDetailsType = {
 	}
 };
 
-export const orderHistoryReducer = (state = orderHistoryDetails, action: WsActionTypes): OrderHistoryDetailsType => {
-	switch (action.type) {
+export const orderHistoryReducer = (state = orderHistoryDetails, action: AllInitialTypes): OrderHistoryDetailsType => {
+	switch ( action.type ) {
 		case WS_OPEN: {
 			return {
 				...state,

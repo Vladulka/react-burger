@@ -4,15 +4,15 @@ import {
 	DEL_INGREDIENT,
 	DROP_CONSTRUCTOR,
 	SORT_INGREDIENTS
-} from "../actions/burger-constructor";
-import { AllInitialTypes, IIngredient } from "../../types";
+} from "../../actions/burger-constructor";
+import { AllInitialTypes, IIngredient } from "../../../types";
 
-const initialData = {
+export const initialData = {
 	items: [] as Array<IIngredient>,
 	bun: {} as IIngredient
 }
 
-type InitialBurgerConstructorType = {
+export type InitialBurgerConstructorType = {
 	items: Array<IIngredient>,
 	bun: IIngredient
 };

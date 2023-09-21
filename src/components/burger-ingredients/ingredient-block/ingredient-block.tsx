@@ -23,7 +23,7 @@ const IngredientBlock = ({type, onModalClick, lookRef}: IIngredientBlock) => {
     );
 
     return (
-        <div>
+        <div data-test-marker={type}>
             <p ref={lookRef} className={`${style.ingredients_subtitle} text text_type_main-default mt-10 mb-6`}>
                 { type === "bun" ? "Булка" : type === "sauce" ? "Соусы" : "Начинки" }
             </p>

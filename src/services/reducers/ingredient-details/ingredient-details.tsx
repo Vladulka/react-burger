@@ -1,11 +1,10 @@
 import {
     DEL_INGREDIENT_DETAIL,
-    GET_INGREDIENT_DETAIL,
-    InitialIngredientDetailActionTypes
-} from "../actions/ingredient-details";
-import { IIngredient } from "../../types";
+    GET_INGREDIENT_DETAIL
+} from "../../actions/ingredient-details";
+import { AllInitialTypes, IIngredient } from "../../../types";
 
-const initialData = {
+export const initialData = {
     currentIngredient: {}
 }
 
@@ -13,7 +12,7 @@ type InitialIngredientDetailType = {
     currentIngredient: IIngredient | {}
 };
 
-export const ingredientDetailsReducer = (state = initialData, action: InitialIngredientDetailActionTypes): InitialIngredientDetailType => {
+export const ingredientDetailsReducer = (state = initialData, action: AllInitialTypes): InitialIngredientDetailType => {
     switch (action.type) {
         case GET_INGREDIENT_DETAIL: {
             return {

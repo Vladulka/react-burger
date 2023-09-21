@@ -1,7 +1,7 @@
-import { AllInitialTypes, OrderType } from "../../types";
-import { DEL_ORDER_INFO_DETAIL, GET_ORDER_INFO_DETAIL } from "../actions/order-info";
+import { AllInitialTypes, OrderType } from "../../../types";
+import { DEL_ORDER_INFO_DETAIL, GET_ORDER_INFO_DETAIL } from "../../actions/order-info";
 
-const initialData = {
+export const initialData = {
     currentOrder: {} as OrderType
 }
 
@@ -20,7 +20,7 @@ export const orderInfoReducer = (state = initialData, action: AllInitialTypes): 
         case DEL_ORDER_INFO_DETAIL: {
             return {
                 ...state,
-                currentOrder: initialData.currentOrder
+                currentOrder: {} as OrderType
             }
         }
         default: {

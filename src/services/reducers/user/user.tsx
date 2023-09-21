@@ -4,10 +4,10 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     SET_CHECK_SUCCESS
-} from "../actions/user";
-import { AllInitialTypes } from "../../types";
+} from "../../actions/user";
+import { AllInitialTypes } from "../../../types";
 
-const initialData = {
+export const initialData = {
     user: {
         email: "",
         name: ""

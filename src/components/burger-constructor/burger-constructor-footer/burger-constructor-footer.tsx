@@ -71,7 +71,7 @@ const BurgerConstructorFooter = () => {
                 <p className="text text_type_digits-medium mr-2">{state.count ? state.count : 0}</p>
                 <CurrencyIcon type="primary"/>
             </div>
-            <Button htmlType="button" type="primary" size="large" onClick={onModalClick}>
+            <Button htmlType="button" type="primary" size="large" onClick={onModalClick} data-test-marker="submit-order-button">
                 Оформить заказ
             </Button>
             {

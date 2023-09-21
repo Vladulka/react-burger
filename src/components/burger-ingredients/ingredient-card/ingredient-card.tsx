@@ -35,7 +35,7 @@ const IngredientCard = ({onModalClick, data}: IIngredientCard) => {
     });
 
     return (
-        <div ref={dragRef} className={style.ingredient_card} onClick={() => onModalClick(data)}>
+        <div ref={dragRef} className={style.ingredient_card} onClick={() => onModalClick(data)} data-test-marker={ "current-ingredient" }>
             <Link
                 to={{ pathname: `/ingredients/${data._id}` }}
                 state={{ background: location }}

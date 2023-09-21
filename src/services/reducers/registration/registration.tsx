@@ -1,7 +1,7 @@
-import {GET_REGISTER_FAILED, GET_REGISTER_REQUEST, GET_REGISTER_SUCCESS} from "../actions/registration";
-import { AllInitialTypes, IIngredient, TAuthResponse } from "../../types";
+import {GET_REGISTER_FAILED, GET_REGISTER_REQUEST, GET_REGISTER_SUCCESS} from "../../actions/registration";
+import { AllInitialTypes, TAuthResponse } from "../../../types";
 
-const initialData = {
+export const initialData = {
     registerData: {
         accessToken: "",
         refreshToken: "",
